@@ -15,4 +15,13 @@ export default {
     },
   },
   plugins: [],
+  mode: 'jit',
+  safelist: [
+    'bg-[#ffc300]',
+    'border-[#ffc300]',
+    'text-[#ffc300]',
+    'background-image:url(https://image.tmdb.org/t/p/original/ag66gJCiZ06q1GSJuQlhGLi3Udx.jpg)',
+    ':after:background-image:url(https://image.tmdb.org/t/p/original/ag66gJCiZ06q1GSJuQlhGLi3Udx.jpg)',
+    'after:background-image:url(https://image.tmdb.org/t/p/original/ag66gJCiZ06q1GSJuQlhGLi3Udx.jpg)'
+  ]
 } satisfies Config;
