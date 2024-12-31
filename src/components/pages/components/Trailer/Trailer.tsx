@@ -72,8 +72,8 @@ const Trailer = () => {
             </div>
           )}
         </div>
+        <ModalPlayer modalOpened={modalPlayer} closeModal={closeModal} youtubeId={youtubeId} />
       </section>
-      <ModalPlayer modalOpened={modalPlayer} closeModal={closeModal} youtubeId={youtubeId} />
     </div>
   );
 };

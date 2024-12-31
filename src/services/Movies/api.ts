@@ -123,7 +123,7 @@ export const searchMovie = async (params:any) =>{
   }
 }
 
-export const getExternalIds = async (movie_id:string) =>{
+export const getMovieExternalIds = async (movie_id:string) =>{
   const fullUrl = `${url}/movie/${movie_id}/external_ids`;
   try {
     const response = await fetch(fullUrl, {

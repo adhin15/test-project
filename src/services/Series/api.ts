@@ -121,3 +121,20 @@ export const searchTv = async (params:any) =>{
     console.log(err);
   }
 }
+
+export const getTvExternalIds = async (series_id:string) =>{
+  const fullUrl = `${url}/tv/${series_id}/external_ids`;
+  try {
+    const response = await fetch(fullUrl, {
+      method: "GET",
+      headers: {
+        Authorization: bearerToken,
+        accept: "application/json",
+      },
+    });
+    const responseData = await response.json();
+    return Promise.resolve(responseData);
+  } catch (err) {
+    console.log(err);
+  }
+}

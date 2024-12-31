@@ -42,7 +42,7 @@ const Card = (props: any) => {
         <div className="w-full min-w-[150px] min-h-[225px]  h-full">
           <img
             className="w-full h-full min-h-[225px] object-cover rounded object-position lazy-load-image"
-            src={`https://www.themoviedb.org/t/p/original${data?.backdrop_path}`}
+            src={`https://www.themoviedb.org/t/p/original${data?.poster_path}`}
             alt=""
           />
         </div>
