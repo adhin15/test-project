@@ -1,16 +1,14 @@
 "use client";
-import react, { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import "../../../../app/globals.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import Modal from "@/components/shared/ModalPlayer";
 import { GlobalContext } from "./layout.context";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Cookies from "js-cookie";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,13 +22,25 @@ const Layout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const [modalOpened, setModalOpened] = useState(false);
-  const [modalElement, setModalElement] = useState(null);
+  const temp = {
+    session_id: null,
+  };
+  const userData = useMemo(() => {
+    const value = Cookies.get("MoFlixxUser");
+    return value;
+  }, [Cookies.get("MoFlixxUser")]);
+
   useEffect(() => {
     Aos.init({
       duration: 500,
     });
   }, []);
+
+  const value = {
+    userData: JSON.parse(userData || null),
+  };
+
+  // const logout
 
   return (
     <html lang="en">
@@ -46,9 +56,11 @@ const Layout = ({
       </Head>
       <body>
         <QueryClientProvider client={queryClient}>
-          <Navbar />
-          <div className="min-h-screen pt-[68px]">{children}</div>
-          <Footer />
+          <GlobalContext.Provider value={value}>
+            <Navbar />
+            <div className="min-h-screen pt-[68px]">{children}</div>
+            <Footer />
+          </GlobalContext.Provider>
         </QueryClientProvider>
       </body>
     </html>

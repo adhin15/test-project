@@ -387,6 +387,7 @@ div#cast_scroller.scrolled::after {
   }
 }
 
+
 .move-animation {
   animation-name: move;
   animation-duration: 0.5s;
@@ -423,6 +424,45 @@ div#cast_scroller.scrolled::after {
     transform: translateX(100%);
     opacity: 0;
     display: none;
+  }
+}
+
+
+.move-in-button {
+  animation-name: move-in-button;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes move-in-button {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+.move-out-button {
+  animation-name: move-out-button;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes move-out-button {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
   }
 }
 
@@ -465,4 +505,18 @@ div#cast_scroller.scrolled::after {
     display: none;
 
   }
+}
+
+span.avatar {
+  min-width: 32px;
+  width: 32px;
+  min-height: 32px;
+  height: 32px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 50%;
+  color: #fff;
+  font-size: .9em;
+  font-weight: 600;
+  background-color: #ffc300;
 }
