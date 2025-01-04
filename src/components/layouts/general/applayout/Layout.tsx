@@ -23,7 +23,9 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   const { isClient, contextValue, queryClient } = useLayout();
-
+  useEffect(() => {
+    console.log("log env", process.env.NEXT_PUBLIC_BASE_URL);
+  }, []);
   return (
     <html lang="en">
       <Head>
