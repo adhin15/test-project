@@ -15,13 +15,13 @@ const DetailSeries = (props: any) => {
   const [castingScrolled, setCastingScrolled] = useState(false);
 
   const circle = () => {
-    var circle = document.getElementById(`circle ${detailTv?.id}`);
+    var circle: any = document.getElementById(`circle ${detailTv?.id}`);
     var radius = circle.r.baseVal.value;
-    var circumference = radius * 2 * Math.PI;
+    var circumference: number = radius * 2 * Math.PI;
 
     circle.style.strokeDasharray = `${circumference} ${circumference}`;
     circle.style.strokeDashoffset =
-      `${circumference}` - (Number(detailTv?.vote_average.toString().slice(0, 3)) / 10) * circumference;
+      circumference - (Number(detailTv?.vote_average.toString().slice(0, 3)) / 10) * circumference;
   };
 
   const timeConvert = (n: any) => {
@@ -276,6 +276,7 @@ const DetailSeries = (props: any) => {
             )}
           </div>
           <div className=" border-b-[1px] mt-[32px] mb-[32px]"></div>
+
           <div>
             {/* ------------------SEASON SECTION------------------ */}
             <h3 className="font-bold text-2xl mb-[16px]">Current Season</h3>

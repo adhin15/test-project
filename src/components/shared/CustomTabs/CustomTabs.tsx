@@ -9,10 +9,6 @@ const CustomTabs = (props: any) => {
     setState(val);
   };
 
-  useEffect(() => {
-    console.log("log tabs", state);
-  }, [state]);
-
   return (
     <div id="custom-radio-tabs" className="flex bg-[#fafafa] text-[#999] rounded-[20px] py-[5.5px]">
       {Tabs?.map((val: any, index: any) => {

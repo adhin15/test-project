@@ -12,15 +12,15 @@ const useGetCastingList = ({
   const query = useQuery({
     queryFn: async () => {
       if(type === 'movie'){
-        const res = await getMovieCastingList(payload?.id);
+        const res = await getMovieCastingList({id:payload?.id});
           return res;
       }else{
-        const res = await getTvCastingList(payload?.id);
+        const res = await getTvCastingList({id:payload?.id});
           return res;
 
       }
       },
-      queryKey: ['movie-list-casting',payload?.id],
+      queryKey: ['movie-list-casting',{id:payload?.id}],
     },);
   
     return query;

@@ -1,15 +1,14 @@
-import { bearerToken } from "../Apikey";
-const url = `https://api.themoviedb.org/3`;
+const url = process.env.NEXT_PUBLIC_BASE_URL+"/api/tmdb";
 
-export const getDetailPerson = async (id:any) => {
-    const fullUrl = `${url}/person/${id}`;
+export const getDetailPerson = async (payload:{id:string}) => {
+    const fullUrl = `${url}/person/detail`;
     try {
       const response = await fetch(fullUrl, {
-        method: "GET",
+        method: "POST",
         headers: {
-          Authorization: bearerToken,
           accept: "application/json",
         },
+        body:JSON.stringify(payload)
       });
       const responseData = await response.json();
       return Promise.resolve(responseData);
@@ -18,15 +17,15 @@ export const getDetailPerson = async (id:any) => {
     }
   };
 
-  export const getPersonCredit = async (id:any) => {
-    const fullUrl = `${url}/person/${id}/combined_credits`;
+  export const getPersonCredit = async (payload:{id:string}) => {
+    const fullUrl = `${url}/person/combined_credits`;
     try {
       const response = await fetch(fullUrl, {
-        method: "GET",
+        method: "POST",
         headers: {
-          Authorization: bearerToken,
           accept: "application/json",
         },
+        body:JSON.stringify(payload)
       });
       const responseData = await response.json();
       return Promise.resolve(responseData);

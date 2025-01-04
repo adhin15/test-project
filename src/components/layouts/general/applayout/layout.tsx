@@ -1,46 +1,28 @@
 "use client";
-import { useEffect, useMemo } from "react";
 import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import "../../../../app/globals.css";
-import Aos from "aos";
 import "aos/dist/aos.css";
 import { GlobalContext } from "./layout.context";
-import Cookies from "js-cookie";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
+import type { Viewport } from "next";
+import useLayout from "./Layout.hook";
+import LayoutProvider from "./Layout.provider";
+import { useEffect } from "react";
+
+export const viewport: Viewport = {
+  maximumScale: 1.0,
+  userScalable: false,
+};
+
 const Layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const temp = {
-    session_id: null,
-  };
-  const userData = useMemo(() => {
-    const value = Cookies.get("MoFlixxUser");
-    return value;
-  }, [Cookies.get("MoFlixxUser")]);
-
-  useEffect(() => {
-    Aos.init({
-      duration: 500,
-    });
-  }, []);
-
-  const value = {
-    userData: JSON.parse(userData || null),
-  };
-
-  // const logout
+  const { isClient, contextValue, queryClient } = useLayout();
 
   return (
     <html lang="en">
@@ -55,13 +37,18 @@ const Layout = ({
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
       <body>
-        <QueryClientProvider client={queryClient}>
-          <GlobalContext.Provider value={value}>
-            <Navbar />
-            <div className="min-h-screen pt-[68px]">{children}</div>
-            <Footer />
-          </GlobalContext.Provider>
-        </QueryClientProvider>
+        {isClient ? (
+          <QueryClientProvider client={queryClient}>
+            <LayoutProvider />
+            <GlobalContext.Provider value={contextValue}>
+              <Navbar />
+              <div className="min-h-screen pt-[84px]">{children}</div>
+              <Footer />
+            </GlobalContext.Provider>
+          </QueryClientProvider>
+        ) : (
+          <></>
+        )}
       </body>
     </html>
   );

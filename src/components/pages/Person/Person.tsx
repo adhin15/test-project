@@ -7,31 +7,21 @@ import ExpMapping from "./components/ExpMapping";
 import MovieCredit from "./components/MovieCredit";
 import { PersonLeftSkeleton, PersonRightSkeleton } from "@/components/shared/Skeleton/PersonSkeleton";
 import usePerson from "./Person.hook";
+import Button from "@/components/shared/Button";
+import BackButton from "@/components/shared/BackButton";
 
 const PersonDetail = () => {
   const { detailPerson, personCredit, isLoading, castingScrolled, readMore, setReadMore, handleScroll } = usePerson();
 
-  const CalculateAge = (birthDate: any) => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e10);
+  const CalculateAge = (birthDate: any) => {
+    const newDate: any = new Date();
+    return Math.floor((newDate - new Date(birthDate).getTime()) / 3.15576e10);
+  };
 
   return (
     <div className="px-4 md:px-12">
-      <div className="flex flex-col text-left	">
-        <button className="text-left flex items-center gap-[8px]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            className="bi bi-arrow-left"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fillRule="evenodd"
-              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-            />
-          </svg>
-          <Link href={"javascript:history.go(-1)"}>back</Link>
-        </button>
+      <div className="text-left flex items-center gap-[8px]	">
+        <BackButton />
       </div>
       <div className="flex gap-[16px] py-4">
         <div className="w-1/3">

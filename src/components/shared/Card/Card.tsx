@@ -24,7 +24,7 @@ const Card = (props: any) => {
     var circumference = radius * 2 * Math.PI;
 
     circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    circle.style.strokeDashoffset = `${circumference}` - (data?.vote_average / 10) * circumference;
+    circle.style.strokeDashoffset = circumference - (data?.vote_average / 10) * circumference;
   };
 
   const redirectType = (type: string) => {

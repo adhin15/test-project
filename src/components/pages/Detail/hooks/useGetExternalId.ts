@@ -12,15 +12,15 @@ const useGetExternalId = ({
   const query = useQuery({
     queryFn: async () => {
       if(type === 'movie'){
-        const res = await getMovieExternalIds(payload?.id);
+        const res = await getMovieExternalIds({id:payload?.id});
           return res;
       }else{
-        const res = await getTvExternalIds(payload?.id);
+        const res = await getTvExternalIds({id:payload?.id});
           return res;
 
       }
       },
-      queryKey: ['external-id',payload?.id],
+      queryKey: ['external-id',{id:payload?.id}],
     },);
   
     return query;

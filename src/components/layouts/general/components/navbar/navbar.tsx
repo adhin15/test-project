@@ -3,17 +3,18 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useGlobalContext } from "../../applayout/layout.context";
+import Button from "@/components/shared/Button";
+import DropDown from "@/components/shared/Dropdown";
+import useNavbar from "./Navbar.hook";
+import Loader from "@/components/shared/Loader";
 
 const Navbar = () => {
+  const { handleLogout, isLogoutLoading } = useNavbar();
   const { userData } = useGlobalContext();
   const [scrolled, setScrolled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [isClient, setIsClient] = useState(false);
 
-  const inputRef = useRef(null);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const inputRef: any = useRef(null);
 
   const handleScroll = () => {
     const offset = window.scrollY;
@@ -25,67 +26,80 @@ const Navbar = () => {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-  }, []);
+  window.addEventListener("scroll", handleScroll);
+
+  const getInitial = (params: string) => {
+    return params[0];
+  };
+  const submitSearch = (e: any) => {
+    e.preventDefault();
+    window.location.replace(`/search?query=${e.target[0].value}`);
+  };
 
   return (
     <>
-      {isClient ? (
-        <div
-          className={`flex items-center px-12 py-4 max-w-full h-18 w-full flex-wrap fixed top-0 transition ease-in delay-550 relative" z-10 ${
-            scrolled ? "bg-secondary-bg" : "bg-transparent"
-          }`}
-          id="container-navbar"
-        >
-          <div className="h-9 " id="container-image">
-            <Link href={"/"} type="button" className="cursor-pointer h-full">
-              <img src="/images/main-logo.webp" className="w-24 h-full" />
-            </Link>
-          </div>
-          <div className="ml-12 flex-1 flex gap-4 justify-end font-bold text-base">
-            <div className="flex gap-3 w-1/3 justify-end relative">
+      <div
+        className={`flex items-center px-12 py-4 max-w-full h-[84px] w-full flex-wrap fixed top-0 transition ease-in delay-550 relative" z-10 ${
+          scrolled ? "bg-secondary-bg" : "bg-transparent"
+        }`}
+        id="container-navbar"
+      >
+        <div className="h-9 " id="container-image">
+          <Link href={"/"} type="button" className="cursor-pointer h-full">
+            <img src="/images/main-logo.webp" className="w-24 h-full" />
+          </Link>
+        </div>
+        <div className="ml-12 flex-1 flex gap-4 justify-end font-bold text-base">
+          <div className="flex gap-3 w-1/3 justify-end relative">
+            <form onSubmit={submitSearch}>
               <input
                 ref={inputRef}
                 type="text"
                 className={`text-white bg-transparent border-b-2 outline-0 opacity-0 p-1 px-2 text-sm absolute left-[0%] ${
-                  showSearch ? "move-animation" : "move-out-animation"
+                  !showSearch ? "move-out-animation" : "move-animation"
                 }`}
                 placeholder="Search"
                 onBlur={() => {
                   setShowSearch(false);
                 }}
               />
-              <button
-                onClick={() => {
-                  setShowSearch(true);
-                  setTimeout(() => {
-                    inputRef.current.focus();
-                  }, 500);
-                }}
-                className={showSearch ? "move-out-button" : "move-in-button"}
-              >
-                <img src="/assets/search.svg" />
-              </button>
-              {userData?.session_id ? (
-                <div className="flex items-center justify-center gap-2 cursor-pointer">
-                  <span className="avatar flex items-center justify-center">C</span>
-                  <span>{userData?.username}</span>
-                </div>
+            </form>
+            <button
+              onClick={() => {
+                setShowSearch(true);
+                setTimeout(() => {
+                  inputRef.current.focus();
+                }, 500);
+              }}
+              className={showSearch ? "move-out-button" : "move-in-button"}
+            >
+              <img src="/assets/search.svg" />
+            </button>
+            {userData?.session_id ? (
+              !isLogoutLoading ? (
+                <DropDown
+                  label={
+                    <div className="flex justify-center items-center gap-2 bg-transparent">
+                      <span className="avatar flex items-center justify-center uppercase">
+                        {getInitial(userData?.username)}
+                      </span>
+                      <span>{userData?.username}</span>
+                    </div>
+                  }
+                  dropdownList={[{ label: "Logout", onClick: handleLogout }]}
+                  className="bg-transparent hover:bg-transparent"
+                />
               ) : (
-                <button
-                  className="w-24 bg-main-accent rounded-full px-4 py-2 text-black active:scale-100 hover:scale-110 transition ease-in-out delay-50"
-                  onClick={() => {}}
-                >
-                  <Link href="/login">Login</Link>
-                </button>
-              )}
-            </div>
+                <Loader size={22} />
+              )
+            ) : (
+              <Button>
+                <Link href="/login">Login</Link>
+              </Button>
+            )}
           </div>
         </div>
-      ) : (
-        <></>
-      )}
+      </div>
     </>
   );
 };

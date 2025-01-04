@@ -12,15 +12,15 @@ const useGetKeywords = ({
   const query = useQuery({
     queryFn: async () => {
       if(type === 'movie'){
-        const res = await getMovieKeywords(payload?.id);
+        const res = await getMovieKeywords({id:payload?.id});
           return res?.keywords;
       }else{
-        const res = await getTvKeywords(payload?.id);
+        const res = await getTvKeywords({id:payload?.id});
           return res?.results;
 
       }
       },
-      queryKey: ['keywords',payload?.id],
+      queryKey: ['keywords',{id:payload?.id}],
     },);
   
     return query;

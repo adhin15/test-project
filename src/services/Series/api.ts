@@ -1,34 +1,32 @@
-import { useQuery } from "@tanstack/react-query";
-import { bearerToken } from "../Apikey";
-const url = `https://api.themoviedb.org/3`;
+const url = process.env.NEXT_PUBLIC_BASE_URL+"/api/tmdb";
 
 type payload = {
     timeWindow: 'day' | 'week'
 }
 
-export const getTrendingSeries = async ({timeWindow = "day"}: payload) => {
+export const getTrendingSeries = async (payload: payload) => {
   try {
-    const response = await fetch(`${url}/trending/tv/${timeWindow}`, {
-      method: "GET",
+    const response = await fetch(`${url}/tv/trending`, {
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData.results);
   } catch {}
 };
 
-export const getDetailTv = async (id:string) => {
-  const fullUrl = `${url}/tv/${id}`;
+export const getDetailTv = async (payload:{id:string}) => {
+  const fullUrl = `${url}/tv/detail`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);
@@ -37,15 +35,15 @@ export const getDetailTv = async (id:string) => {
   }
 };
 
-export const getTvCastingList = async (id:string) => {
-  const fullUrl = `${url}/tv/${id}/credits`;
+export const getTvCastingList = async (payload:{id:string}) => {
+  const fullUrl = `${url}/tv/credits`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);
@@ -54,15 +52,15 @@ export const getTvCastingList = async (id:string) => {
   }
 };
 
-export const getTvKeywords = async (id:string) => {
-  const fullUrl = `${url}/tv/${id}/keywords`;
+export const getTvKeywords = async (payload:{id:string}) => {
+  const fullUrl = `${url}/tv/keywords`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);
@@ -75,9 +73,8 @@ export const getAiringToday = async () =>{
   const fullUrl = `${url}/tv/airing_today`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
     });
@@ -88,15 +85,15 @@ export const getAiringToday = async () =>{
   }
 }
 
-export const getTvVideo = async (id:string) =>{
-  const fullUrl = `${url}/tv/${id}/videos`;
+export const getTvVideo = async (payload:{id:string}) =>{
+  const fullUrl = `${url}/tv//videos`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);
@@ -104,16 +101,15 @@ export const getTvVideo = async (id:string) =>{
     console.log(err);
   }
 }
-export const searchTv = async (params:any) =>{
-  const {keyword,adult="false",page=1,} = params
-  const fullUrl = `${url}/search/tv?query=${keyword}&include_adult=${adult}&language=en-US&page=${page}`;
+export const searchTv = async (payload:any) =>{
+  const fullUrl = `${url}/tv/search/`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);
@@ -122,15 +118,15 @@ export const searchTv = async (params:any) =>{
   }
 }
 
-export const getTvExternalIds = async (series_id:string) =>{
-  const fullUrl = `${url}/tv/${series_id}/external_ids`;
+export const getTvExternalIds = async (payload:{id:string}) =>{
+  const fullUrl = `${url}/tv/external_ids`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);

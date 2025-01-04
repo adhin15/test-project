@@ -12,15 +12,15 @@ const useGetDetailMovie = ({
   const query = useQuery({
     queryFn: async () => {
       if(type === 'movie'){
-        const res = await getDetailMovie(payload?.id);
+        const res = await getDetailMovie({id:payload?.id});
           return res;
       }else{
-        const res = await getDetailTv(payload?.id);
+        const res = await getDetailTv({id:payload?.id});
           return res;
 
       }
       },
-      queryKey: ['video-trailer',payload?.id],
+      queryKey: ['video-trailer',{id:payload?.id}],
     },);
   
     return query;

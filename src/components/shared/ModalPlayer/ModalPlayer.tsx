@@ -1,8 +1,5 @@
-import { useRef } from "react";
-
 const ModalPlayer = (props: any) => {
   const { modalOpened, closeModal, youtubeId } = props;
-  const inpuRef = useRef(null);
 
   return (
     <div

@@ -7,8 +7,9 @@ const SearchResult = (props: any) => {
   const imageUrl = `https://www.themoviedb.org/t/p/original`;
 
   const redirectType = (type: any) => {
-    if (type === "movies")
-      return `/${type + "/" + data?.id}/-${data?.title?.toLowerCase()?.replaceAll(" ", "_")?.replaceAll(":", "")}`;
+    if (type === "movie") {
+      return `/${type + "/" + data?.id}`;
+    }
     return `/${"tv-series" + "/" + data?.id}/`;
   };
 

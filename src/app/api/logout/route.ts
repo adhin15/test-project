@@ -1,19 +1,34 @@
-import { getRequestToken, validateSession, validateLogin, getDetailAccount, validateLogout } from "@/services/Auth/api";
+
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+const url = process.env.TMDB_BASE_URL;
 
 
-type logoutPayload = {
-    session_id:string;
-} 
-
-export async function POST(request:logoutPayload) {
-  let response;
+const validateLogout = async (payload:any) => {
+      
+    const fullUrl = `${url}/authentication/session`;
+    try {
+      const response = await fetch(fullUrl, {
+        method: "DELETE",
+        headers: {
+          Authorization: process.env.BEARER_TOKEN || '',
+          'Content-Type': 'application/json'
+        },
+        body:payload
+      });
+      const responseData = await response.json();
+      return Promise.resolve(responseData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+export async function POST(request:any) {
   const requestData = await request.json();
-
-  validateLogout(requestData?.session_id).then((res)=>{
-    response = res;
+  
+  validateLogout(JSON.stringify({session_id: requestData?.session_id})).then(async(res)=>{
+    const cookieStore = await cookies();
+    cookieStore.delete("MoFlixxUser");
   })
-  return NextResponse.json({ message: response }, { status: 200 });
+  return NextResponse.json({ message: 'success' }, { status: 200 });
  
 }

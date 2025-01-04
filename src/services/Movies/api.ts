@@ -1,34 +1,29 @@
-import { useQuery } from "@tanstack/react-query";
-import { bearerToken } from "../Apikey";
-const url = `https://api.themoviedb.org/3`;
+const url = process.env.NEXT_PUBLIC_BASE_URL+"/api/tmdb";
 
-type payload = {
-    timeWindow: 'day' | 'week'
-}
 
-export const getTrendingMovies = async ({timeWindow = "day"}: payload) => {
+export const getTrendingMovies = async (payload: any) => {
   try {
-    const response = await fetch(`${url}/trending/movie/${timeWindow}`, {
-      method: "GET",
+    const response = await fetch(`${url}/movie/trending`, {
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
-        accept: "application/json",
+        'Content-Type': 'application/json'
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
-    return Promise.resolve(responseData.results);
+    return Promise.resolve(responseData);
   } catch {}
 };
 
-export const getDetailMovie = async (id:string) => {
-  const fullUrl = `${url}/movie/${id}`;
+export const getDetailMovie = async (payload:{id:string}) => {
+  const fullUrl = `${url}/movie/detail`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);
@@ -37,15 +32,15 @@ export const getDetailMovie = async (id:string) => {
   }
 };
 
-export const getMovieCastingList = async (id:string) => {
-  const fullUrl = `${url}/movie/${id}/credits`;
+export const getMovieCastingList = async (payload:{id:string}) => {
+  const fullUrl = `${url}/movie/credits`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);
@@ -54,15 +49,15 @@ export const getMovieCastingList = async (id:string) => {
   }
 };
 
-export const getMovieKeywords = async (id:string) => {
-  const fullUrl = `${url}/movie/${id}/keywords`;
+export const getMovieKeywords = async (payload:{id:string}) => {
+  const fullUrl = `${url}/movie/keywords`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);
@@ -75,9 +70,8 @@ export const getUpcomingMovies = async () =>{
   const fullUrl = `${url}/movie/upcoming`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
     });
@@ -88,15 +82,32 @@ export const getUpcomingMovies = async () =>{
   }
 }
 
-export const getMoviesVideo = async (id:string) =>{
-  const fullUrl = `${url}/movie/${id}/videos`;
+export const getMoviesVideo = async (payload:{id:string}) =>{
+  const fullUrl = `${url}/movie/videos`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
+      body:JSON.stringify(payload)
+    });
+    const responseData = await response.json();
+    return Promise.resolve(responseData?.results);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const searchMovie = async (payload:any) =>{
+  const fullUrl = `${url}/movie/search`;
+  try {
+    const response = await fetch(fullUrl, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+      },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);
@@ -105,33 +116,15 @@ export const getMoviesVideo = async (id:string) =>{
   }
 }
 
-export const searchMovie = async (params:any) =>{
-  const {keyword,adult="false",page=1,} = params
-  const fullUrl = `${url}/search/movie?query=${keyword}&include_adult=${adult}&language=en-US&page=${page}`;
+export const getMovieExternalIds = async (payload:{id:string}) =>{
+  const fullUrl = `${url}/movie/external_ids`;
   try {
     const response = await fetch(fullUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
-        Authorization: bearerToken,
         accept: "application/json",
       },
-    });
-    const responseData = await response.json();
-    return Promise.resolve(responseData);
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-export const getMovieExternalIds = async (movie_id:string) =>{
-  const fullUrl = `${url}/movie/${movie_id}/external_ids`;
-  try {
-    const response = await fetch(fullUrl, {
-      method: "GET",
-      headers: {
-        Authorization: bearerToken,
-        accept: "application/json",
-      },
+      body:JSON.stringify(payload)
     });
     const responseData = await response.json();
     return Promise.resolve(responseData);

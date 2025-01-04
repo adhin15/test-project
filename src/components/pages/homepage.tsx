@@ -5,6 +5,7 @@ import Trending from "./components/Trending/Trending";
 import Trailer from "./components/Trailer";
 import useGetTrendingMovieList from "./components/Trending/hooks/useGetTrendingMovies";
 import { useEffect, useState } from "react";
+import Button from "../shared/Button";
 
 export default function Home() {
   const [searchValue, setSearchValue] = useState("");
@@ -44,12 +45,18 @@ export default function Home() {
                   className="w-11/12 text-[#000000] p-3 rounded-l-full focus:outline-0 px-5"
                   placeholder="Search for a movie, tv show, person...."
                 />
-                <button
-                  type="submit"
-                  className="w-36 bg-main-accent rounded-full -ml-6 text-black active:scale-100 hover:scale-110 transition ease-in-out delay-50"
-                >
-                  Search
-                </button>
+                <div className="-ml-6 w-36 p-0 h-[48px] text-black">
+                  <Button
+                    className="h-full "
+                    type="submit"
+                    variant="regular"
+                    style={{ borderRadius: "999px" }}
+                    textSize={16}
+                    isFullWidth
+                  >
+                    Search
+                  </Button>
+                </div>
               </div>
             </form>
           </div>

@@ -2,6 +2,7 @@ type Variant = 'regular' | 'outlined' | 'text'
 type TextVariant =  'display1' | 'display2' | 'title1' | 'title2' | 'buttonLarge' | 'button' | 'body1' | 'body2' | 'body3' | 'body4' | 'body5' | 'body6' | 'body7'
 
 export type ButtonProps = {
+    className?:string,
     label?: string;
     variant?: Variant;
     textVariant?: TextVariant;
@@ -18,4 +19,5 @@ export type ButtonProps = {
     style?: React.CSSProperties;
     textWeight?: string | number;
     textSize?: string | number;
+    type?:string;
 }

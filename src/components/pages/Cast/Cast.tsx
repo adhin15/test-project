@@ -7,9 +7,11 @@ import { generateImageUrl } from "@/components/shared/Helper/Helper";
 import useCast from "./Cast.hook";
 import CastHeaderSkeleton from "@/components/shared/Skeleton/CastHeaderSkeleton";
 import CastSkeleton from "@/components/shared/Skeleton/CastSkeleton";
+import Button from "@/components/shared/Button";
+import BackButton from "@/components/shared/BackButton";
 
 const Cast = () => {
-  const { castingList, detailMovie, isLoading, handleBack } = useCast();
+  const { castingList, detailMovie, isLoading } = useCast();
 
   return (
     <div className="px-4 md:px-12">
@@ -27,20 +29,7 @@ const Cast = () => {
                 {detailMovie?.release_date?.slice(0, 4) || detailMovie?.first_air_date?.slice(0, 4)})
               </h3>
               <div className="text-left flex items-center gap-[8px]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-arrow-left"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-                  />
-                </svg>
-                <button onClick={handleBack}>back</button>
+                <BackButton />
               </div>
             </div>
           </>
@@ -48,7 +37,7 @@ const Cast = () => {
           <CastHeaderSkeleton />
         )}
       </div>
-      <div className="container w-full max-w-full pt-5">
+      <div className="container w-full max-w-full pt-5 overflow-x-hidden">
         <div className="flex mt-5">
           <div className="w-1/2 flex flex-wrap flex-col">
             <h3 className="text-[24px] font-bold mb-6">

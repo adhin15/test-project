@@ -4,11 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 const useGetPersonCredit = ({ payload = {}, onSuccess = () => {}, type = "movie" }: any) => {
   const query = useQuery({
     queryFn: async () => {
-      const res = await getPersonCredit(payload?.id);
+      const res = await getPersonCredit({id:payload?.id});
 
       return res;
     },
-    queryKey: ["person-credit", payload?.id],
+    queryKey: ["person-credit", {id:payload?.id}],
   });
 
   return query;

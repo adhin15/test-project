@@ -13,15 +13,15 @@ const useGetVideo = ({
   const query = useQuery({
     queryFn: async () => {
       if(type === 'movie'){
-        const res = await getMoviesVideo(payload?.id);
+        const res = await getMoviesVideo({id:payload?.id});
           return res;
       }else{
-        const res = await getTvVideo(payload?.id);
+        const res = await getTvVideo({id:payload?.id});
           return res;
 
       }
       },
-      queryKey: ['video-trailer',payload?.id],
+      queryKey: ['video-trailer',{id:payload?.id}],
       enabled: enabled,
     },);
   

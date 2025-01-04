@@ -4,15 +4,11 @@ import useGetDetailMovie from "../Detail/hooks/useGetDetailMovie";
 import { useEffect, useMemo } from "react";
 
 const useCast = () =>{
-    const { id } = useParams();
+    const { id }:{id:string} = useParams();
     const router = useRouter();
     const query = id.split('-')[1];
     const path = usePathname();
     const type = (path.split("/")[2]).split("-")[0];
-    
-    useEffect(()=>{
-        console.log('logid',type)
-    },[type])
 
     const { data: castingList, isLoading: isCastingListLoading } = useGetCastingList({
         payload: { id:query },

@@ -1,16 +1,14 @@
-import { bearerToken } from "../Apikey";
-const url = `https://api.themoviedb.org/3`;
+const url = process.env.NEXT_PUBLIC_BASE_URL+"/api/tmdb";
 
-export const searchMulti = async (params:any) =>{
-    const {keyword,adult="false",page=1,} = params
-    const fullUrl = `${url}/search/multi?query=${keyword}&include_adult=${adult}&language=en-US&page=${page}`;
+export const searchMulti = async (payload:any) =>{
+    const fullUrl = `${url}/multi/search/`;
     try {
       const response = await fetch(fullUrl, {
-        method: "GET",
+        method: "POST",
         headers: {
-          Authorization: bearerToken,
           accept: "application/json",
         },
+        body:JSON.stringify(payload)
       });
       const responseData = await response.json();
       return Promise.resolve(responseData);

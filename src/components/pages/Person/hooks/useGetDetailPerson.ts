@@ -4,11 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 const useGetDetailPerson = ({ payload = {}, onSuccess = () => {}, type = "movie" }: any) => {
   const query = useQuery({
     queryFn: async () => {
-      const res = await getDetailPerson(payload?.id);
+      const res = await getDetailPerson({id: payload?.id});
 
       return res;
     },
-    queryKey: ["detail-person", payload?.id],
+    queryKey: ["detail-person", {id:payload?.id}],
   });
 
   return query;
