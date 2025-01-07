@@ -1,5 +1,5 @@
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const url = process.env.TMDB_BASE_URL;
 
@@ -21,7 +21,7 @@ const getTvExternalIds = async (series_id:string) =>{
 }
 
 
-export async function POST(request:any) {
+export async function POST(request:NextRequest) {
   let response;
 
   const requestData = await request.json();

@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 
 
-export async function POST(request:any) {
+export async function POST(request:NextRequest) {
   let response;
   let status;
   const requestData = await request.json();

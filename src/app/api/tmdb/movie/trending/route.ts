@@ -1,5 +1,5 @@
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const url = process.env.TMDB_BASE_URL;
 
@@ -22,12 +22,11 @@ const getTrendingMovies = async ({timeWindow = "day"}: payload) => {
   };
 
 
-export async function POST(request:any) {
+export async function POST(request:NextRequest) {
   let response;
 
   const requestData = await request.json();
   await getTrendingMovies(requestData?.timeWindow).then((val)=>{
-    console.log('log env',process.env.BEARER_TOKEN)
     response = val;
   })
 

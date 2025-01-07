@@ -1,6 +1,6 @@
 
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 const url = process.env.TMDB_BASE_URL;
 
 
@@ -22,7 +22,7 @@ const validateLogout = async (payload:any) => {
       console.log(err);
     }
   };
-export async function POST(request:any) {
+export async function POST(request:NextRequest) {
   const requestData = await request.json();
   
   validateLogout(JSON.stringify({session_id: requestData?.session_id})).then(async(res)=>{

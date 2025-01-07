@@ -41,3 +41,8 @@ export const formatDate = (val:any) => {
     return fullUrl;
   };
 
+  export const votePercentage = (params:number) =>{
+    const numericPart = Math.floor(params * 10);
+    const result = numericPart + "%";
+    return result;
+  }

@@ -1,6 +1,6 @@
 
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 const url = process.env.TMDB_BASE_URL;
 
 const getRequestToken = async () => {
@@ -75,7 +75,7 @@ const getDetailAccount = async (id:string) => {
   }
 };
 
-export async function POST(request:any) {
+export async function POST(request:NextRequest) {
   let response;
   let status;
   const requestData = await request.json();
