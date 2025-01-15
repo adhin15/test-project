@@ -12,7 +12,7 @@ const Trending = () => {
 
   return (
     <section>
-      <div className="px-10 py-10">
+      <div className="px-5 md:px-10  md:py-10">
         <div className="flex items-center gap-[8px]">
           <h3>Trending</h3>
           <Switcher labelLeft={"Movies"} labelRight={"Series"} callBack={switcherCallback} />

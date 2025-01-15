@@ -66,6 +66,17 @@ body {
   font-family: Monserrat;
 }
 
+@media screen and (max-width: 767px) {
+
+  span,
+  p,
+  h2,
+  input,
+  button {
+    font-size: 14px;
+  }
+}
+
 .bg-footer-accent {
   background-color: #003566;
 }

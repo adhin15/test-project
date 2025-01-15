@@ -41,7 +41,7 @@ const Layout = ({
             <LayoutProvider />
             <GlobalContext.Provider value={contextValue}>
               <Navbar />
-              <div className="min-h-screen pt-[84px]">{children}</div>
+              <div className="min-h-screen pt-[60px] md:pt-[84px]">{children}</div>
               <Footer />
             </GlobalContext.Provider>
           </QueryClientProvider>

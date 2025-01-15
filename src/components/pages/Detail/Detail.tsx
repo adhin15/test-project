@@ -9,7 +9,7 @@ const Detail = () => {
 
   return (
     <>
-      <div className="w-full max-w-full py-5 px-12">
+      <div className="w-full max-w-full py-5 px-6 md:px-12">
         {type === "movie" ? (
           <DetailMovie
             detailMovie={detailMovie}

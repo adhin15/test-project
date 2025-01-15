@@ -7,13 +7,13 @@ const CastingList = (props: any) => {
   return (
     <>
       <div
-        className="mr-4 relative border rounded border-[#001d3d] box-shadow max-w-[150px] h-full transition-transform duration-100 transform hover:scale-105"
+        className="mr-4 relative border rounded border-[#001d3d] box-shadow md:max-w-[150px] max-w-[120px] h-full transition-transform duration-100 transform hover:scale-105"
         style={{ overflowWrap: "break-word" }}
       >
         <Link href={`/person/${data?.id}`}>
-          <div className="w-full min-w-[150px] min-h-[225px] ">
+          <div className="w-full min-w-[120px] md:min-h-[225px] min-h-[120px]">
             <img
-              className="w-[99%] min-h-[225px] object-cover rounded object-position lazy-load-image"
+              className="w-[99%] md:min-h-[225px] min-h-[120px] object-cover rounded object-position lazy-load-image"
               src={generateImageUrl(data?.profile_path)}
               alt=""
             />
@@ -23,8 +23,8 @@ const CastingList = (props: any) => {
               {/* {Math.round(data.vote_average * 10)}% */}
             </p>
           </div>
-          <h2 className="mt-5 font-bold px-2">{data.name}</h2>
-          <p className="font-normal opacity-50 text-[12px] p-2">{data.character}</p>
+          <h2 className="mt-5 font-bold text-[14px] md:text-[16px] px-2">{data.name}</h2>
+          <p className="font-normal opacity-50 text-[10px] md:text-[12px] p-2">{data.character}</p>
         </Link>
       </div>
     </>

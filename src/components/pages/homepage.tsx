@@ -33,10 +33,12 @@ export default function Home() {
         }}
       ></div>
       <section id="backdrop-home">
-        <div className={`container h-96 pt-12 w-full max-w-full px-10`}>
+        <div className={`container md:h-96 h-[22rem] pt-6 md:pt-12 w-full max-w-full px-10`}>
           <div className="block w-full font-bold">
             <h2 className="text-5xl mb-3">Wellcome.</h2>
-            <h3 className="text-3xl mb-12">Millions of movies, TV shows and people to discover. Explore now.</h3>
+            <h3 className="text-xl md:text-3xl mb-12">
+              Millions of movies, TV shows and people to discover. Explore now.
+            </h3>
             <form onSubmit={submitSearch}>
               <div className="flex">
                 <input
@@ -51,7 +53,7 @@ export default function Home() {
                     type="submit"
                     variant="regular"
                     style={{ borderRadius: "999px" }}
-                    textSize={16}
+                    // textSize={16}
                     isFullWidth
                   >
                     Search

@@ -26,8 +26,8 @@ const Trailer = () => {
           className="z-[-1] bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[25rem] z-10 opacity-30 min-h-[40%] transition-image"
           style={{ backgroundImage: `URL(https://image.tmdb.org/t/p/original${bgSection})` }}
         ></div>
-        <div className="px-10 py-10 overflow-x-hidden	">
-          <div className="flex items-center gap-[16px]">
+        <div className="px-5 md:px-10 py-10 overflow-x-hidden	">
+          <div className="flex items-center flex-wrap md:flex-nowrap gap-[16px]">
             <h3 className="font-bold text-xl">Trailers</h3>
             <CustomTabs
               Tabs={[

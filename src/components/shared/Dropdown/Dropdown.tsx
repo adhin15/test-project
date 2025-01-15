@@ -19,8 +19,8 @@ const DropDown = ({
       <button
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
-        className={`relative z-10 text-white px-4 bg-transparent font-medium 
-        rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center ${className}`}
+        className={`relative z-10 text-white bg-transparent font-medium 
+        rounded-lg text-sm px-2 md:px-5 py-2.5 text-center inline-flex items-center ${className}`}
         type="button"
         data-dropdown-trigger="hover"
         onBlur={() => {

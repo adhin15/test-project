@@ -61,31 +61,38 @@ const DetailMovie = (props: any) => {
   return (
     <>
       <div
-        className="z-[-1] bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[35rem] max-h-[35rem] z-10 opacity-30 min-h-[40%] transition-image"
+        className="z-[-1] bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[31rem] md:max-h-[35rem] z-10 opacity-30 min-h-[40%] transition-image"
         style={{
           backgroundImage: `URL(https://image.tmdb.org/t/p/original${detailMovie?.backdrop_path})`,
         }}
       ></div>
-      <div id="bg-cover" className={`flex mb-[44px]`}>
+      <div id="bg-cover" className={`flex flex-wrap justify-center md:justify-start mb-[44px]`}>
         {!isLoading ? (
           <>
             <div
-              className={`flex-none w-1/3 max-w-[300px] rounded-lg overflow-hidden	`}
+              className={`flex-none md:w-1/3 max-w-[210px] md:max-w-[300px] rounded-lg overflow-hidden	`}
               data-aos="fade-up"
               data-aos-delay="200"
             >
               <img className="lazy-load-image" src={imageUrl + detailMovie?.poster_path} alt="" />
             </div>
-            <div className={`w-2/3 max-h-full rounded-lg overflow-hidden px-8 flex flex-col justify-center`}>
+            <div
+              className={`md:w-2/3 max-h-full rounded-lg overflow-hidden md:px-8 flex flex-col justify-center md:justify-start text-center	md:text-left`}
+            >
               <h2 className="text-4xl my-2" data-aos="fade-left" data-aos-delay="300">
-                <span className="font-bold">{detailMovie?.title}</span>({detailMovie?.release_date?.slice(0, 4) || "-"})
+                <span className="font-bold text-4xl">{detailMovie?.title}</span>(
+                {detailMovie?.release_date?.slice(0, 4) || "-"})
               </h2>
 
-              <div className="my-2 flex items-center" data-aos="fade-left" data-aos-delay="400">
+              <div
+                className="my-2 flex flex-wrap items-center flex-col md:flex-row"
+                data-aos="fade-left"
+                data-aos-delay="400"
+              >
                 <span>
-                  {/* {detailMovie?.release_date} ({detailMovie && detailMovie?.production_countries[0]?.iso_3166_1}) */}
+                  {detailMovie?.release_date} ({detailMovie && detailMovie?.production_countries[0]?.iso_3166_1})
                 </span>
-                <span>
+                <span className="hidden md:block">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -102,7 +109,7 @@ const DetailMovie = (props: any) => {
                     return val.name + ", ";
                   })}
                 </span>
-                <span>
+                <span className="hidden md:block">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -118,7 +125,7 @@ const DetailMovie = (props: any) => {
                 <p></p>
               </div>
 
-              <div className="flex items-center	my-2" data-aos="fade-left" data-aos-delay="500">
+              <div className="flex flex-wrap items-center	my-2" data-aos="fade-left" data-aos-delay="500">
                 <span className="relative flex items-center justify-center" style={{ left: 0, height: 56, width: 56 }}>
                   <p className="text-[14px] py-4 px-3 absolute" style={{ zIndex: 1 }}>
                     {detailMovie?.vote_average ? votePercentage(detailMovie?.vote_average) : "0%"}
@@ -151,6 +158,7 @@ const DetailMovie = (props: any) => {
                 </span>
 
                 <span className="ml-2 font-bold max-w-[48px]">User Score</span>
+                <br />
                 <span>
                   <IconContainer>
                     <svg
@@ -213,10 +221,10 @@ const DetailMovie = (props: any) => {
                 </span>
               </div>
 
-              <div className="my-2" data-aos="fade-left" data-aos-delay="600">
+              <div className="my-2" data-aos="fade-left" data-aos-delay="600" data-aos-once="true">
                 <p className="italic opacity-80">{detailMovie?.tagline}</p>
               </div>
-              <div className="my-2" data-aos="fade-left" data-aos-delay="700">
+              <div className="my-2" data-aos="fade-left" data-aos-delay="700" data-aos-once="true">
                 <h4 className="font-bold text-xl">Overview</h4>
                 <p className="my-1">{detailMovie?.overview}</p>
               </div>
@@ -227,8 +235,8 @@ const DetailMovie = (props: any) => {
         )}
       </div>
 
-      <div className="flex">
-        <div className={`w-2/3 `}>
+      <div className="flex flex-wrap">
+        <div className={`md:w-2/3 w-full`}>
           <h3 className="font-bold text-2xl">Top Billed Cast</h3>
           <div>
             {!isLoading ? (
@@ -275,7 +283,7 @@ const DetailMovie = (props: any) => {
             )}
           </div>
         </div>
-        <div className="w-1/3 min-w-[260px] px-3">
+        <div className="md:w-1/3 w-full min-w-[260px] md:px-3 mt-7 md:mt-0">
           <div className="h-full">
             {/* SOCIAL MEDIA ICON */}
             <GeneralFieldSkeleton isLoading={isLoading} width="40%" className="mb-8">
