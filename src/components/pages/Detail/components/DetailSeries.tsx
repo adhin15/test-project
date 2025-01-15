@@ -64,31 +64,37 @@ const DetailSeries = (props: any) => {
   return (
     <>
       <div
-        className="z-[-1] bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[35rem] max-h-[35rem] z-10 opacity-30 min-h-[40%] transition-image"
+        className="z-[-1] bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[31rem] md:max-h-[35rem] z-10 opacity-30 min-h-[40%] transition-image"
         style={{
           backgroundImage: `URL(https://image.tmdb.org/t/p/original${detailTv?.backdrop_path})`,
         }}
       ></div>
-      <div id="bg-cover" className={`flex mb-[44px]`}>
+      <div id="bg-cover" className={`flex flex-wrap justify-center md:justify-start mb-[44px]`}>
         {!isLoading ? (
           <>
             <div
-              className={`flex-none w-1/3 max-w-[300px] rounded-lg overflow-hidden	`}
+              className={`flex-none md:w-1/3 max-w-[210px] md:max-w-[300px] rounded-lg overflow-hidden	`}
               data-aos="fade-up"
               data-aos-delay="200"
             >
               <img className="lazy-load-image" src={imageUrl + detailTv?.poster_path} alt="" />
             </div>
-            <div className={`w-2/3 max-h-full rounded-lg overflow-hidden px-8 flex flex-col justify-center`}>
+            <div
+              className={`md:w-2/3 max-h-full rounded-lg overflow-hidden px-8 flex flex-col justify-center md:justify-start text-center md:text-left`}
+            >
               <h2 className="text-4xl my-2" data-aos="fade-left" data-aos-delay="300">
-                <span className="font-bold">{detailTv?.name}</span>({detailTv?.first_air_date?.slice(0, 4)})
+                <span className="font-bold text-4xl">{detailTv?.name}</span>({detailTv?.first_air_date?.slice(0, 4)})
               </h2>
 
-              <div className="my-2 flex items-center" data-aos="fade-left" data-aos-delay="400">
+              <div
+                className="my-2 flex flex-wrap items-center flex-col md:flex-row"
+                data-aos="fade-left"
+                data-aos-delay="400"
+              >
                 <span>
                   {detailTv?.release_date} ({detailTv?.production_countries[0]?.iso_3166_1})
                 </span>
-                <span>
+                <span className="hidden md:block">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -105,7 +111,7 @@ const DetailSeries = (props: any) => {
                     return val.name + ", ";
                   })}
                 </span>
-                <span>
+                <span className="hidden md:block">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -121,7 +127,11 @@ const DetailSeries = (props: any) => {
                 <p></p>
               </div>
 
-              <div className="flex items-center	my-2" data-aos="fade-left" data-aos-delay="500">
+              <div
+                className="flex items-center	my-2 justify-center md:justify-start"
+                data-aos="fade-left"
+                data-aos-delay="500"
+              >
                 <span className="relative " style={{ left: 0, height: 56, width: 56 }}>
                   <p className="text-[16px] py-4 px-3 absolute" style={{ left: 2, bottom: 0, zIndex: 1 }}>
                     {detailTv?.vote_average.toString().slice(0, 3) * 10}%
@@ -153,7 +163,7 @@ const DetailSeries = (props: any) => {
                   </div>
                 </span>
 
-                <span className="ml-2 font-bold max-w-[48px]">User Score</span>
+                <span className="ml-2 font-bold max-w-[48px] hidden md:block">User Score</span>
                 <span>
                   <IconContainer>
                     <svg
@@ -216,10 +226,10 @@ const DetailSeries = (props: any) => {
                 </span>
               </div>
 
-              <div className="my-2" data-aos="fade-left" data-aos-delay="600">
+              <div className="my-2" data-aos="fade-left" data-aos-delay="600" data-aos-once="true">
                 <p className="italic opacity-80">{detailTv?.tagline}</p>
               </div>
-              <div className="my-2" data-aos="fade-left" data-aos-delay="700">
+              <div className="my-2" data-aos="fade-left" data-aos-delay="700" data-aos-once="true">
                 <h4 className="font-bold text-xl">Overview</h4>
                 <p className="my-1">{detailTv?.overview}</p>
               </div>
@@ -229,8 +239,8 @@ const DetailSeries = (props: any) => {
           <DetailSkeleton />
         )}
       </div>
-      <div className="flex mb-[32px]">
-        <div className={`w-2/3 `}>
+      <div className="flex flex-wrap mb-[32px]">
+        <div className={`md:w-2/3 w-full`}>
           <h3 className="font-bold text-2xl">Series Cast</h3>
           <div>
             {!isLoading ? (

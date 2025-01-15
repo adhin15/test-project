@@ -1,7 +1,7 @@
 import { useParams } from "next/navigation";
 import useGetDetailPerson from "./hooks/useGetDetailPerson";
 import useGetPersonCredit from "./hooks/useGetPersonCredit";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const usePerson = () =>{
     const { id } = useParams();
@@ -11,6 +11,7 @@ const usePerson = () =>{
       const [castingScrolled, setCastingScrolled] = useState(false);
 
     
+      
   const handleScroll = (e:any) => {
     if (e.target.scrollLeft === 0) {
       setCastingScrolled(false);
@@ -19,17 +20,20 @@ const usePerson = () =>{
     }
   };
 
-    const { data: detailPerson, isLoading: isDetailPersonLoading } = useGetDetailPerson({
+  const { data: detailPerson, isLoading: isDetailPersonLoading } = useGetDetailPerson({
         payload: { id },
       });
 
     const { data: personCredit, isLoading: isPersonCreditLoading } = useGetPersonCredit({
-        payload: { id },
+      payload: { id },
     });
 
     const isLoading = useMemo(() => {
-          return isDetailPersonLoading && isPersonCreditLoading;
+      return isDetailPersonLoading && isPersonCreditLoading;
     }, [isDetailPersonLoading, isPersonCreditLoading]);
+    useEffect(()=>{
+      console.log('log val',personCredit)
+    },[personCredit]);
     
     return{
         detailPerson,

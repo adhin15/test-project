@@ -11,7 +11,7 @@ const CastingList = (props: any) => {
         style={{ overflowWrap: "break-word" }}
       >
         <Link href={`/person/${data?.id}`}>
-          <div className="w-full min-w-[120px] md:min-h-[225px] min-h-[120px]">
+          <div className="w-full min-w-[120px] md:min-w-[150px] md:min-h-[225px] min-h-[120px]">
             <img
               className="w-[99%] md:min-h-[225px] min-h-[120px] object-cover rounded object-position lazy-load-image"
               src={generateImageUrl(data?.profile_path)}

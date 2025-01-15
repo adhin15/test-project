@@ -39,7 +39,7 @@ const Card = (props: any) => {
   return (
     <div className="mr-4 max-w-[150px] relative transition-transform duration-100 transform hover:scale-110 peer">
       <Link href={redirectType(type)}>
-        <div className="w-full min-w-[120px] min-h-[205px]  h-full">
+        <div className="w-full min-w-[120px] md:min-w-[150px] min-h-[205px]  h-full">
           <img
             className="w-full h-full min-h-[225px] object-cover rounded object-position lazy-load-image"
             src={`https://www.themoviedb.org/t/p/original${data?.poster_path}`}

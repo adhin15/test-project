@@ -39,7 +39,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`flex items-center px-6 md:px-12 py-4 max-w-full h-[84px] w-full flex-wrap fixed top-0 transition ease-in delay-550 relative" z-10 ${
+        className={`flex items-center px-6 md:px-12 py-4 max-w-full h-[84px] w-full flex-wrap fixed top-0 transition ease-in delay-550 z-10 ${
           scrolled ? "bg-secondary-bg" : "bg-transparent"
         }`}
         id="container-navbar"

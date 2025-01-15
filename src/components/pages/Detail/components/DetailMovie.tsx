@@ -125,7 +125,11 @@ const DetailMovie = (props: any) => {
                 <p></p>
               </div>
 
-              <div className="flex flex-wrap items-center	my-2" data-aos="fade-left" data-aos-delay="500">
+              <div
+                className="flex flex-wrap items-center my-2 justify-center md:justify-start"
+                data-aos="fade-left"
+                data-aos-delay="500"
+              >
                 <span className="relative flex items-center justify-center" style={{ left: 0, height: 56, width: 56 }}>
                   <p className="text-[14px] py-4 px-3 absolute" style={{ zIndex: 1 }}>
                     {detailMovie?.vote_average ? votePercentage(detailMovie?.vote_average) : "0%"}
@@ -157,7 +161,7 @@ const DetailMovie = (props: any) => {
                   </div>
                 </span>
 
-                <span className="ml-2 font-bold max-w-[48px]">User Score</span>
+                <span className="ml-2 font-bold max-w-[48px] hidden md:block">User Score</span>
                 <br />
                 <span>
                   <IconContainer>
@@ -283,7 +287,7 @@ const DetailMovie = (props: any) => {
             )}
           </div>
         </div>
-        <div className="md:w-1/3 w-full min-w-[260px] md:px-3 mt-7 md:mt-0">
+        <div className="md:w-1/3 w-full md:px-3 mt-7 md:mt-0">
           <div className="h-full">
             {/* SOCIAL MEDIA ICON */}
             <GeneralFieldSkeleton isLoading={isLoading} width="40%" className="mb-8">
