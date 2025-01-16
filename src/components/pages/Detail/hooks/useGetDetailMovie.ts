@@ -20,7 +20,7 @@ const useGetDetailMovie = ({
 
       }
       },
-      queryKey: ['video-trailer',{id:payload?.id}],
+      queryKey: ['detail-movie-tv',{id:payload?.id}],
     },);
   
     return query;

@@ -1,7 +1,7 @@
 import {  getPersonCredit } from "@/services/Person/api";
 import { useQuery } from "@tanstack/react-query";
 
-const useGetPersonCredit = ({ payload = {}, onSuccess = () => {}, type = "movie" }: any) => {
+const useGetPersonCredit = ({ payload = {}, onSuccess = () => {} }: any) => {
   const query = useQuery({
     queryFn: async () => {
       const res = await getPersonCredit({id:payload?.id});

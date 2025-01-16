@@ -5,7 +5,7 @@ const BackButton = () => {
     history.back();
   };
   return (
-    <Button variant="text" className="p-0 px-0 py-0" onClick={handleBack}>
+    <Button variant="text" className="p-0 px-0 py-0" onClick={handleBack} style={{ padding: 0 }}>
       <div className="flex items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"

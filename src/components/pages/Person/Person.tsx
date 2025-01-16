@@ -11,7 +11,16 @@ import Button from "@/components/shared/Button";
 import BackButton from "@/components/shared/BackButton";
 
 const PersonDetail = () => {
-  const { detailPerson, personCredit, isLoading, castingScrolled, readMore, setReadMore, handleScroll } = usePerson();
+  const {
+    detailPerson,
+    personCredit,
+    isLoading,
+    castingScrolled,
+    readMore,
+    setReadMore,
+    handleScroll,
+    sortedCreditDataList,
+  } = usePerson();
 
   const CalculateAge = (birthDate: any) => {
     const newDate: any = new Date();
@@ -24,7 +33,7 @@ const PersonDetail = () => {
         <BackButton />
       </div>
       <div className="flex flex-wrap py-4">
-        <div className="md:w-1/3 w-full flex flex-wrap justify-center md:justify-start mb-6 md:mb-0">
+        <div className="md:w-1/3 w-full flex flex-wrap justify-center md:justify-start md:flex-col mb-6 md:mb-0">
           {isLoading ? (
             <PersonLeftSkeleton />
           ) : (
@@ -121,99 +130,99 @@ const PersonDetail = () => {
 
         {/* //////////----RIGHT SECTION----///////// */}
         <div className="md:w-2/3 ps-0 md:ps-[16px] w-full">
-          {isLoading ? (
-            <PersonRightSkeleton />
-          ) : (
-            <>
-              <div className="md:block hidden">
-                <h3 className="font-bold text-3xl mb-4" data-aos="fade-down" data-aos-delay="200">
-                  {detailPerson?.name}
-                </h3>
-                <h4 className="font-bold text-xl mb-2" data-aos="fade-left" data-aos-delay="400">
-                  Biography
-                </h4>
-                <div
-                  id="truncate-container"
-                  className={`truncate-text pb-6 mb-6`}
-                  data-aos="fade-left"
-                  data-aos-delay="400"
-                  style={!readMore ? { height: "220px", maxHeight: "220px", overflow: "hidden" } : {}}
-                >
-                  {detailPerson?.biography?.split("\n\n").map((val: any, index: any) => {
-                    return (
-                      <p className="mb-[12px]" key={index}>
-                        {val}
-                      </p>
-                    );
-                  })}
-                  <span
-                    className={`${
-                      readMore ? "hidden" : ""
-                    } absolute bottom-0 right-0 text-main-accent font-bold flex items-center gap-[4px] p-0 bg-[#000814]`}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setReadMore(true);
-                    }}
+          <>
+            {isLoading ? (
+              <PersonRightSkeleton />
+            ) : (
+              <>
+                <div className="md:block hidden">
+                  <h3 className="font-bold text-3xl mb-4" data-aos="fade-down" data-aos-delay="200">
+                    {detailPerson?.name}
+                  </h3>
+                  <h4 className="font-bold text-xl mb-2" data-aos="fade-left" data-aos-delay="400">
+                    Biography
+                  </h4>
+                  <div
+                    id="truncate-container"
+                    className={`truncate-text pb-6 mb-6`}
+                    data-aos="fade-left"
+                    data-aos-delay="400"
+                    style={!readMore ? { height: "220px", maxHeight: "220px", overflow: "hidden" } : {}}
                   >
-                    Read More
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-arrow-right-circle-fill"
-                      viewBox="0 0 16 16"
+                    {detailPerson?.biography?.split("\n\n").map((val: any, index: any) => {
+                      return (
+                        <p className="mb-[12px]" key={index}>
+                          {val}
+                        </p>
+                      );
+                    })}
+                    <span
+                      className={`${
+                        readMore ? "hidden" : ""
+                      } absolute bottom-0 right-0 text-main-accent font-bold flex items-center gap-[4px] p-0 bg-[#000814]`}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setReadMore(true);
+                      }}
                     >
-                      <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                    </svg>
-                  </span>
+                      Read More
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-arrow-right-circle-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
-              </div>
-
-              <div className="relative mb-4">
-                <h3 className="font-bold text-2xl">Known For</h3>
-                {!isLoading ? (
-                  <div className={`relative mt-10 ${castingScrolled ? "scrolled" : ""}`} id="cast_scroller">
-                    <div
-                      className={`flex overflow-x-scroll w-full flex-nowrap md:px-4 px-0 py-4 my-6`}
-                      onScroll={handleScroll}
-                      data-aos="fade-left"
-                      data-aos-delay="400"
-                    >
-                      {personCredit?.cast?.map((val: any, index: any) => {
-                        return (
-                          <div data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
-                            <MovieCredit data={val} />
-                          </div>
-                        );
-                      })}
-                    </div>
+              </>
+            )}
+            <div className="relative mb-4">
+              <h3 className="font-bold text-2xl">Known For</h3>
+              {!isLoading ? (
+                <div className={`relative mt-10 ${castingScrolled ? "scrolled" : ""}`} id="cast_scroller">
+                  <div
+                    className={`flex overflow-x-scroll w-full flex-nowrap md:px-4 px-0 py-4 my-6`}
+                    onScroll={handleScroll}
+                  >
+                    {sortedCreditDataList?.slice(0, 10)?.map((val: any, index: any) => {
+                      return (
+                        <div data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
+                          {val.title}
+                          <MovieCredit data={val} />
+                        </div>
+                      );
+                    })}
                   </div>
-                ) : (
-                  <div className="flex overflow-x-scroll w-full flex-nowrap px-4 py-4 my-6">
-                    <CardSkeleton />
-                    <CardSkeleton />
-                    <CardSkeleton />
-                    <CardSkeleton />
-                    <CardSkeleton />
-                  </div>
-                )}
-              </div>
-              <ExpMapping data={personCredit?.cast} header={"Acting"} />
-              <ExpMapping
-                header={"Production"}
-                data={personCredit?.crew?.filter(function (res: any) {
-                  return res.department === "Production";
-                })}
-              />
-              <ExpMapping
-                header={"Crew"}
-                data={personCredit?.crew?.filter(function (res: any) {
-                  return res.department === "Crew";
-                })}
-              />
-            </>
-          )}
+                </div>
+              ) : (
+                <div className="flex overflow-x-scroll w-full flex-nowrap px-4 py-4 my-6">
+                  <CardSkeleton />
+                  <CardSkeleton />
+                  <CardSkeleton />
+                  <CardSkeleton />
+                  <CardSkeleton />
+                </div>
+              )}
+            </div>
+            <ExpMapping data={sortedCreditDataList} header={"Acting"} />
+            <ExpMapping
+              header={"Production"}
+              data={personCredit?.crew?.filter(function (res: any) {
+                return res.department === "Production";
+              })}
+            />
+            <ExpMapping
+              header={"Crew"}
+              data={personCredit?.crew?.filter(function (res: any) {
+                return res.department === "Crew";
+              })}
+            />
+          </>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import IconContainer from "@/components/shared/IconContainer/IconContainer";
 import DetailSkeleton from "@/components/shared/DetailSkeleton/DetailSkeleton";
 import CastingList from "@/components/shared/CastingList/CastingList";
 import CardSkeleton from "@/components/shared/Skeleton";
-import { formatDate } from "@/components/shared/Helper/Helper";
+import { formatDate, votePercentage } from "@/components/shared/Helper/Helper";
 import StarReview from "@/components/shared/StarRreview";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
 
@@ -80,7 +80,7 @@ const DetailSeries = (props: any) => {
               <img className="lazy-load-image" src={imageUrl + detailTv?.poster_path} alt="" />
             </div>
             <div
-              className={`md:w-2/3 max-h-full rounded-lg overflow-hidden px-8 flex flex-col justify-center md:justify-start text-center md:text-left`}
+              className={`md:w-2/3 max-h-full rounded-lg overflow-hidden md:px-8 flex flex-col justify-center md:justify-start text-center md:text-left`}
             >
               <h2 className="text-4xl my-2" data-aos="fade-left" data-aos-delay="300">
                 <span className="font-bold text-4xl">{detailTv?.name}</span>({detailTv?.first_air_date?.slice(0, 4)})
@@ -128,13 +128,13 @@ const DetailSeries = (props: any) => {
               </div>
 
               <div
-                className="flex items-center	my-2 justify-center md:justify-start"
+                className="flex flex-wrap items-center my-2 justify-center md:justify-start"
                 data-aos="fade-left"
                 data-aos-delay="500"
               >
-                <span className="relative " style={{ left: 0, height: 56, width: 56 }}>
-                  <p className="text-[16px] py-4 px-3 absolute" style={{ left: 2, bottom: 0, zIndex: 1 }}>
-                    {detailTv?.vote_average.toString().slice(0, 3) * 10}%
+                <span className="relative flex items-center justify-center" style={{ left: 0, height: 56, width: 56 }}>
+                  <p className="text-[14px] py-4 px-3 absolute" style={{ zIndex: 1 }}>
+                    {detailTv?.vote_average ? votePercentage(detailTv?.vote_average) : "0%"}
                   </p>
                   <div className="w-full">
                     <svg
@@ -142,7 +142,7 @@ const DetailSeries = (props: any) => {
                       width="56"
                       height="56"
                       style={{
-                        color: bgcolor(detailTv?.vote_average.toString().slice(0, 3) * 10),
+                        color: bgcolor(detailTv?.vote_average?.toString().slice(0, 3) * 10),
                         left: 0,
                         bottom: 0,
                       }}
@@ -164,6 +164,7 @@ const DetailSeries = (props: any) => {
                 </span>
 
                 <span className="ml-2 font-bold max-w-[48px] hidden md:block">User Score</span>
+                <br />
                 <span>
                   <IconContainer>
                     <svg
@@ -291,9 +292,9 @@ const DetailSeries = (props: any) => {
           <div>
             {/* ------------------SEASON SECTION------------------ */}
             <h3 className="font-bold text-2xl mb-[16px]">Current Season</h3>
-            <div className="flex box-shadow border-[1px] border-[#374151] rounded-[8px] gap-[12px]">
+            <div className="flex flex-wrap md:flex-nowrap box-shadow border-[1px] border-[#374151] rounded-[8px] gap-[12px]">
               <img
-                className="lazy-load-image max-w-[120px] rounded-l-[8px] object-cover	"
+                className="lazy-load-image md:max-w-[120px] rounded-l-[8px] object-cover	"
                 src={imageUrl + detailTv?.seasons?.slice(-1)[0]?.poster_path}
                 alt=""
               />
@@ -324,7 +325,7 @@ const DetailSeries = (props: any) => {
                       " permiered on " +
                       formatDate(detailTv?.seasons?.slice(-1)[0]?.air_date)}
                 </p>
-                <div className="text-sm my-[12px] flex items-center gap-[8px]">
+                <div className="text-sm my-[12px] flex flex-wrap md:flex-nowrap items-center gap-[8px]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -350,7 +351,7 @@ const DetailSeries = (props: any) => {
           </div>
         </div>
 
-        <div className="w-1/3 min-w-[260px] px-3">
+        <div className="md:w-1/3 px-3">
           <div className="h-full">
             {/* SOCIAL MEDIA ICON */}
             <GeneralFieldSkeleton isLoading={isLoading} width="40%" className="mb-8">

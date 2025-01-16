@@ -8,7 +8,7 @@ const ModalPlayer = (props: any) => {
       style={!modalOpened ? { opacity: 0, zIndex: 0, height: 0 } : { opacity: 1, zIndex: 99 }}
     >
       <div
-        className={`fixed top-0 flex justify-center items-center transition-ease-in bg-[#fff] w-[90vw] h-[50vw] top-[10%] left-[5%]
+        className={`fixed top-[30%] flex justify-center items-center transition-ease-in bg-[#fff] w-[90vw] h-[50vw] md:top-[10%] left-[5%]
           ${modalOpened ? "move-in-modal" : "move-out-modal"}`}
       >
         <div className="w-full h-full" onClick={closeModal}>
@@ -35,7 +35,11 @@ const ModalPlayer = (props: any) => {
             {youtubeId === "0" ? (
               ""
             ) : youtubeId ? (
-              <iframe className="w-full h-full" src={`https://www.youtube.com/embed/${youtubeId}`}></iframe>
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${youtubeId}`}
+                allow="fullscreen;"
+              ></iframe>
             ) : (
               <div className="flex h-full w-full items-center justify-center">
                 <h2 className="font-bold text-center text-xl">Unavailable</h2>
