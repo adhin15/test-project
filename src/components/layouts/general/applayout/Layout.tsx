@@ -27,6 +27,16 @@ const Layout = ({
     <html lang="en">
       <Head>
         <title>MoFLixx</title>
+        <meta property="og:url" content="https://mo-flixx.vercel.app/" />
+        <meta property="og:type" content="Website" />
+        <meta property="og:site_name" content="MoFlixx - Movie Database" />
+        <meta property="og:title" content="MoFlixx - Movie Database" />
+        <meta
+          property="og:description"
+          content="Welcome to MoFlixx, explore information about movies and TV shows. You can browse through various titles, details like  as release dates, genres, and synopses, and watch trailers. "
+        />
+        <meta property="og:image" content="https://mo-flixx.vercel.app/images/website-thumbnail.png" />
+
         <link href="/dist/main.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
         <link
