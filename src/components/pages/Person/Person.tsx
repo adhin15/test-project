@@ -192,7 +192,6 @@ const PersonDetail = () => {
                     {sortedCreditDataList?.slice(0, 10)?.map((val: any, index: any) => {
                       return (
                         <div data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
-                          {val.title}
                           <MovieCredit data={val} />
                         </div>
                       );
