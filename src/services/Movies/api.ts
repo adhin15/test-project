@@ -132,3 +132,17 @@ export const getMovieExternalIds = async (payload:{id:string}) =>{
     console.log(err);
   }
 }
+
+export const getMovieReviews = async (payload: {id:string, page: string}) => {
+  try {
+    const response = await fetch(`${url}/movie/reviews`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(payload)
+    });
+    const responseData = await response.json();
+    return Promise.resolve(responseData);
+  } catch {}
+};

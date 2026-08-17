@@ -2,13 +2,14 @@ import CastingList from "@/components/shared/CastingList/CastingList";
 import DetailSkeleton from "@/components/shared/DetailSkeleton/DetailSkeleton";
 import { UsdFormatter, votePercentage } from "@/components/shared/Helper/Helper";
 import IconContainer from "@/components/shared/IconContainer/IconContainer";
+import ImageContainer from "@/components/shared/ImageContainer/ImageContainer";
 import CardSkeleton from "@/components/shared/Skeleton";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const DetailMovie = (props: any) => {
-  const { detailMovie, isLoading, castingList, externalIds, id, movieKeywords } = props;
+  const { detailMovie, isLoading, castingList, movieReviews, externalIds, id, movieKeywords } = props;
   const [castingScrolled, setCastingScrolled] = useState(false);
 
   const color = ["#2ce574", "#cdf03a", "#ffe500", "#ff9600", "#ff3924"];
@@ -241,7 +242,7 @@ const DetailMovie = (props: any) => {
 
       <div className="flex flex-wrap">
         <div className={`md:w-2/3 w-full`}>
-          <h3 className="font-bold text-2xl">Top Billed Cast</h3>
+          <h3 className="font-bold text-2xl mb-2">Top Billed Cast</h3>
           <div>
             {!isLoading ? (
               <div className={`relative ${castingScrolled ? "scrolled" : ""}`} id="cast_scroller">
@@ -285,6 +286,20 @@ const DetailMovie = (props: any) => {
                 <CardSkeleton />
               </div>
             )}
+          </div>
+          <div className="flex flex-col border-1 rounded-md border border-gray-700 p-4 box-shadow mt-4">
+            {movieReviews?.results?.map((val: any, index: number) => {
+              return (
+                <div className="flex flex-col" key={index}>
+                  <div className="flex">
+                    <div className="rounded-full">
+                      <ImageContainer src={imageUrl + val?.author_details?.avatar_path} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            <div>tes</div>
           </div>
         </div>
         <div className="md:w-1/3 w-full md:px-3 mt-7 md:mt-0">

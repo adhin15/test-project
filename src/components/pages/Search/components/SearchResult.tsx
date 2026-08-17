@@ -14,7 +14,7 @@ const SearchResult = (props: any) => {
   };
 
   return (
-    <div className="mb-5">
+    <div className="mb-5 transition-transform duration-100 transform hover:scale-105 peer">
       <Link href={redirectType(type)}>
         <div className="flex box-shadow border-[1px] border-[#374151] rounded-[8px] gap-[12px]">
           <img

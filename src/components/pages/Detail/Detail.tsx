@@ -5,7 +5,7 @@ import DetailSeries from "./components/DetailSeries";
 import useDetail from "./Detail.hook";
 
 const Detail = () => {
-  const { detailMovie, castingList, movieKeywords, externalIds, isLoading, id, type } = useDetail();
+  const { detailMovie, castingList, movieKeywords, movieReviews, externalIds, isLoading, id, type } = useDetail();
 
   return (
     <>
@@ -18,6 +18,7 @@ const Detail = () => {
             externalIds={externalIds}
             id={id}
             movieKeywords={movieKeywords}
+            movieReviews={movieReviews}
           />
         ) : (
           <DetailSeries
