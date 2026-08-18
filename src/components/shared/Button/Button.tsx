@@ -1,7 +1,7 @@
 "use client";
 
 import Loader from "../Loader";
-import { ButtonProps } from "./type";
+import type { ButtonProps } from "./type";
 
 const Button = ({
   className = "",

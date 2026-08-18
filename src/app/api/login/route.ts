@@ -1,6 +1,8 @@
 
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { rateLimit } from "@/lib/rateLimit";
 const url = process.env.TMDB_BASE_URL;
 
 const getRequestToken = async () => {
@@ -59,7 +61,8 @@ const validateSession = async (payload:any) => {
 };
 
 const getDetailAccount = async (id:string) => {
-  const fullUrl = `${url}/account/null?session_id=${id}`;
+  // Use the session-scoped account endpoint (no hardcoded account id).
+  const fullUrl = `${url}/account?session_id=${encodeURIComponent(id)}`;
   try {
     const response = await fetch(fullUrl, {
       method: "GET",
@@ -78,7 +81,34 @@ const getDetailAccount = async (id:string) => {
 export async function POST(request:NextRequest) {
   let response;
   let status;
+
+  // Rate limit by client IP to slow brute-force attempts.
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") ||
+    "unknown";
+  const limit = rateLimit(`login:${ip}`);
+  if (!limit.ok) {
+    return NextResponse.json(
+      { message: "Too many attempts. Please try again later." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfterSec) } }
+    );
+  }
+
   const requestData = await request.json();
+
+  // Validate required fields.
+  if (
+    typeof requestData?.username !== "string" ||
+    typeof requestData?.password !== "string" ||
+    !requestData.username.trim() ||
+    !requestData.password
+  ) {
+    return NextResponse.json(
+      { message: "Username and password are required." },
+      { status: 400 }
+    );
+  }
 
   await getRequestToken().then(async (res)=>{
     const payload ={
@@ -92,7 +122,12 @@ export async function POST(request:NextRequest) {
 
           await getDetailAccount(value?.session_id).then(async(respDetail) => {
               const cookieStore = await cookies();
-              cookieStore.set("MoFlixxUser", JSON.stringify({...respDetail, session_id:value?.session_id}), {});
+              cookieStore.set("MoFlixxUser", JSON.stringify({...respDetail, session_id:value?.session_id}), {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                path: "/",
+              });
               response = respDetail;
               status = 200;
             });

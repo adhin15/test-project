@@ -1,4 +1,4 @@
-const url = process.env.NEXT_PUBLIC_BASE_URL+"/api/tmdb";
+const url = "/api/tmdb";
 
 
 export const getTrendingMovies = async (payload: any) => {

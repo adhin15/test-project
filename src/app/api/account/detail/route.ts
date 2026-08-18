@@ -1,10 +1,12 @@
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 const url = process.env.TMDB_BASE_URL;
 
 const getDetailAccount = async (id:string) => {
-  const fullUrl = `${url}/account/null?session_id=${id}`;
+  // Use the session-scoped account endpoint (no hardcoded account id).
+  const fullUrl = `${url}/account?session_id=${encodeURIComponent(id)}`;
   try {
     const response = await fetch(fullUrl, {
       method: "GET",

@@ -32,7 +32,7 @@ export const formatDate = (val:any) => {
   };
 
   export  const generateImageUrl = (url: string, ) => {
-    const imageUrl = `https://www.themoviedb.org/t/p/original/`;
+    const imageUrl = `https://image.tmdb.org/t/p/original/`;
     if (!url) return "/user.png";
 
     let fullUrl = imageUrl + url;

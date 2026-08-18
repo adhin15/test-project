@@ -44,6 +44,7 @@ const PersonDetail = () => {
                   src={generateImageUrl(detailPerson?.profile_path)}
                   data-aos="fade-right"
                   data-aos-delay="200"
+                  alt={detailPerson?.name || "Profile"}
                 />
               </div>
               <div className="md:hidden block">

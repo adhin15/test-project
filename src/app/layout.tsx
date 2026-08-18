@@ -1,11 +1,11 @@
-import { Metadata, Viewport } from "next";
-
-export { default } from "../components/layouts/general/applayout/index";
+import type { Metadata, Viewport } from "next";
+import AppLayout from "../components/layouts/general/applayout/Layout";
 
 export const viewport: Viewport = {
   maximumScale: 1.0,
   userScalable: false,
 };
+
 export const metadata: Metadata = {
   title: "MoFlixx - Movie Database",
   description:
@@ -21,3 +21,15 @@ export const metadata: Metadata = {
     url: "https://mo-flixx.vercel.app",
   },
 };
+
+const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
+  return (
+    <html lang="en">
+      <body>
+        <AppLayout>{children}</AppLayout>
+      </body>
+    </html>
+  );
+};
+
+export default RootLayout;

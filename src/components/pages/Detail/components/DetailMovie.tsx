@@ -62,7 +62,7 @@ const DetailMovie = (props: any) => {
   return (
     <>
       <div
-        className="z-[-1] bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[31rem] md:max-h-[35rem] z-10 opacity-30 min-h-[40%] transition-image"
+        className="bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[31rem] md:max-h-[35rem] opacity-30 min-h-[40%] transition-image"
         style={{
           backgroundImage: `URL(https://image.tmdb.org/t/p/original${detailMovie?.backdrop_path})`,
         }}
@@ -75,7 +75,7 @@ const DetailMovie = (props: any) => {
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              <img className="lazy-load-image" src={imageUrl + detailMovie?.poster_path} alt="" />
+              <img className="lazy-load-image" src={imageUrl + detailMovie?.poster_path} alt={detailMovie?.title || "Poster"} />
             </div>
             <div
               className={`md:w-2/3 max-h-full rounded-lg overflow-hidden md:px-8 flex flex-col justify-center md:justify-start text-center	md:text-left`}

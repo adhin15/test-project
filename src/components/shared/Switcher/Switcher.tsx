@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SwitcherProps } from "./type";
+import type { SwitcherProps } from "./type";
 
 const Switcher = ({
   labelLeft = "Left",

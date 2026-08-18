@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DropdownProps } from "./type";
+import type { DropdownProps } from "./type";
 
 const DropDown = ({
   label = "Dropdown",

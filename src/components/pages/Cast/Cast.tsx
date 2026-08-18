@@ -22,6 +22,7 @@ const Cast = () => {
               src={generateImageUrl(detailMovie?.poster_path)}
               className="w-[20%] max-w-[58px] h-[87px] object-cover lazy-load-image rounded"
               data-aos="fade-right"
+              alt={detailMovie?.name || detailMovie?.title || "Poster"}
             />
             <div className="flex flex-col flex-wrap text-left ps-0 max-w-[70%] ps-4">
               <h3 className="text-2xl font-bold" data-aos="fade-right">

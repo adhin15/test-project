@@ -29,7 +29,7 @@ const Footer = (props: any) => {
             type="button"
             className="cursor-pointer h-full hover:-translate-y-1 hover:scale-110 transition ease-in-out delay-100"
           >
-            <img src="/images/main-logo.webp" className="w-32 h-full m-auto" />
+            <img src="/images/main-logo.webp" className="w-32 h-full m-auto" alt="MoFlixx logo" />
           </a>
         </div>
         <div className="w-full text-center mb-4">
@@ -83,7 +83,7 @@ const Footer = (props: any) => {
             </svg>
           </span>
           2024 MoFlixx. Powered by{" "}
-          <a href="https://developer.themoviedb.org" target="_blank" className="opacity-50 border-b-2">
+          <a href="https://developer.themoviedb.org" target="_blank" rel="noreferrer" className="opacity-50 border-b-2">
             TMDB
           </a>
         </p>

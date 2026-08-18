@@ -4,11 +4,9 @@ import Head from "next/head";
 import Trending from "./components/Trending/Trending";
 import Trailer from "./components/Trailer";
 import useGetTrendingMovieList from "./components/Trending/hooks/useGetTrendingMovies";
-import { useEffect, useState } from "react";
 import Button from "../shared/Button";
 
-export default function Home() {
-  const [searchValue, setSearchValue] = useState("");
+const Home = () => {
   const {
     data: trendingMoviesData,
     refetch: refetchTrendingMovies,
@@ -25,7 +23,7 @@ export default function Home() {
   return (
     <>
       <div
-        className="z-[-1] bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[25rem] z-10 opacity-30 min-h-[40%] transition-image"
+        className="bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[25rem] opacity-30 min-h-[40%] transition-image"
         style={{
           backgroundImage: `URL(https://image.tmdb.org/t/p/original${
             trendingMoviesData && trendingMoviesData[0]?.backdrop_path
@@ -70,4 +68,6 @@ export default function Home() {
       </section>
     </>
   );
-}
+};
+
+export default Home;

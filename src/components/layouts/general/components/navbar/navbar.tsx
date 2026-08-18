@@ -26,7 +26,10 @@ const Navbar = () => {
     }
   };
 
-  window.addEventListener("scroll", handleScroll);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const getInitial = (params: string) => {
     return params[0];
@@ -46,7 +49,7 @@ const Navbar = () => {
       >
         <div className="h-9 " id="container-image">
           <Link href={"/"} type="button" className="cursor-pointer h-full">
-            <img src="/images/main-logo.webp" className="md:w-24 h-full" />
+            <img src="/images/main-logo.webp" className="md:w-24 h-full" alt="MoFlixx logo" />
           </Link>
         </div>
         <div className="md:ml-12 flex-1 flex gap-4 justify-end font-bold text-base">
@@ -73,7 +76,7 @@ const Navbar = () => {
               }}
               className={showSearch ? "move-out-button" : "move-in-button"}
             >
-              <img src="/assets/search.svg" />
+              <img src="/assets/search.svg" alt="Search" />
             </button>
             {userData?.session_id ? (
               !isLogoutLoading ? (

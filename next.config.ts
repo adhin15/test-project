@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "image.tmdb.org",
         port: "",
-        pathname: "/mycompany-data-bucket-dev/**",
+        pathname: "/t/p/**",
       },
     ],
   }
