@@ -90,7 +90,10 @@ const Navbar = () => {
                       <span>{userData?.username}</span>
                     </div>
                   }
-                  dropdownList={[{ label: "Logout", onClick: handleLogout }]}
+                  dropdownList={[
+                    { label: "My Profile", url: `/u/${userData?.id}` },
+                    { label: "Logout", onClick: handleLogout },
+                  ]}
                   className="bg-transparent hover:bg-transparent"
                 />
               ) : (

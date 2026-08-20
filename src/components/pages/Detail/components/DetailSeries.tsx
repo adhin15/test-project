@@ -8,6 +8,7 @@ import CardSkeleton from "@/components/shared/Skeleton";
 import { formatDate, votePercentage } from "@/components/shared/Helper/Helper";
 import StarReview from "@/components/shared/StarRreview";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
+import AccountActions from "./AccountActions";
 import type {
   CastMember,
   DetailViewProps,
@@ -250,6 +251,7 @@ const DetailSeries = ({ detailTv, isLoading, castingList, externalIds, id, movie
                 <h4 className="font-bold text-xl">Overview</h4>
                 <p className="my-1">{detailTv?.overview}</p>
               </div>
+              <AccountActions mediaType="tv" mediaId={Number(Array.isArray(id) ? id[0] : id)} />
             </div>
           </>
         ) : (

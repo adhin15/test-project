@@ -198,6 +198,53 @@ export interface AccountDetail {
   };
 }
 
+// ---------- Account features (P1) ----------
+
+/** Response of GET /account/{id}/movie/{id}/account_states (mirrored). */
+export interface AccountMediaState {
+  id: number;
+  favorite: boolean;
+  watchlist: boolean;
+  /** Present only when the user has rated the title. */
+  rated?: { value: number };
+}
+
+/** TMDB account-list item shape (favorite/watchlist/rated lists). */
+export interface AccountMediaItem {
+  id: number;
+  title?: string; // movie
+  name?: string; // tv
+  media_type?: "movie" | "tv";
+  poster_path?: string | null;
+  backdrop_path?: string | null;
+  overview?: string;
+  vote_average?: number;
+  vote_count?: number;
+  release_date?: string; // movie
+  first_air_date?: string; // tv
+  original_language?: string;
+  genre_ids?: number[];
+  adult?: boolean;
+  /** Present on the `rated` list — the user's personal rating for this title. */
+  rating?: number;
+}
+
+export type AccountMediaType = "movie" | "tv";
+export type AccountListKind = "favorite" | "watchlist" | "rated";
+
+/** Body of POST /account/{account_id}/favorite | /watchlist (mirrored). */
+export interface AccountTogglePayload {
+  media_type: AccountMediaType;
+  media_id: number;
+  favorite: boolean; // /watchlist ignores this; kept for symmetry
+  watchlist?: boolean;
+}
+
+/** Body of POST /movie/{id}/rating | /tv/{id}/rating (mirrored). */
+export interface RatingPayload {
+  value: number;
+}
+
 // ---------- Shared query hook options ----------
 
 export type MediaType = "movie" | "tv";

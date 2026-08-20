@@ -5,6 +5,7 @@ import IconContainer from "@/components/shared/IconContainer/IconContainer";
 import ImageContainer from "@/components/shared/ImageContainer/ImageContainer";
 import CardSkeleton from "@/components/shared/Skeleton";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
+import AccountActions from "./AccountActions";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type {
@@ -250,6 +251,7 @@ const DetailMovie = ({ detailMovie, isLoading, castingList, movieReviews, extern
                 <h4 className="font-bold text-xl">Overview</h4>
                 <p className="my-1">{detailMovie?.overview}</p>
               </div>
+              <AccountActions mediaType="movie" mediaId={Number(Array.isArray(id) ? id[0] : id)} />
             </div>
           </>
         ) : (
