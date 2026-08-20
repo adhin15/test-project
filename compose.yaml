@@ -1,0 +1,25 @@
+services:
+  moflix:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL:-http://localhost:3003}
+        - TMDB_BASE_URL=${TMDB_BASE_URL}
+        - API_KEY=${API_KEY}
+        - BEARER_TOKEN=${BEARER_TOKEN}
+    container_name: moflix
+    restart: unless-stopped
+    ports:
+      - "3003:3003"
+    networks:
+      - proxy
+    environment:
+      - NODE_ENV=production
+      - API_KEY=${API_KEY}
+      - BEARER_TOKEN=${BEARER_TOKEN}
+      - TMDB_BASE_URL=${TMDB_BASE_URL}
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,21 @@
+services:
+  moflix-webhook:
+    image: moflix-webhook:latest
+    container_name: moflix-webhook
+    restart: unless-stopped
+    ports:
+      - "9001:9001"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /home/odysseus/.ssh:/home/odysseus/.ssh:ro
+      - /home/odysseus/projects/moflix:/home/odysseus/projects/moflix
+      - /home/odysseus/projects/moflix/logs:/app/logs
+      - /home/odysseus/projects/moflix/deploy.sh:/app/moflix-deploy.sh:ro
+    networks:
+      - proxy
+    env_file:
+      - .env.webhook
+
+networks:
+  proxy:
+    external: true
