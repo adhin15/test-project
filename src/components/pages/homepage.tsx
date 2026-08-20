@@ -25,14 +25,14 @@ const Home = () => {
   return (
     <>
       <div
-        className="bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[25rem] opacity-30 min-h-[40%] transition-image"
+        className="bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[25rem] opacity-30 min-h-[40%] transition-image pointer-events-none"
         style={{
           backgroundImage: `URL(https://image.tmdb.org/t/p/original${
             trendingMoviesData && trendingMoviesData[0]?.backdrop_path
           })`,
         }}
       ></div>
-      <section id="backdrop-home">
+      <section id="backdrop-home" className="relative">
         <div className={`container md:h-96 h-[22rem] pt-6 md:pt-12 w-full max-w-full px-10`}>
           <div className="block w-full font-bold">
             <h2 className="text-5xl mb-3">Wellcome.</h2>
