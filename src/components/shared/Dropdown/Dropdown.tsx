@@ -52,7 +52,7 @@ const DropDown = ({
         style={{ top: "85%", right: "0%", position: "absolute" }}
       >
         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-          {dropdownList?.map((value: any, index: number) => {
+          {dropdownList?.map((value, index: number) => {
             return (
               <li key={index}>
                 {value?.url ? (

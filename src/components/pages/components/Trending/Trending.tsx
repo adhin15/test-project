@@ -6,6 +6,7 @@ import Switcher from "@/components/shared/Switcher";
 import CardSkeleton from "@/components/shared/Skeleton";
 import Card from "@/components/shared/Card/Card";
 import useTrending from "./Trending.hook";
+import type { MovieSummary, SeriesSummary } from "@/types";
 
 const Trending = () => {
   const { trendingMoviesData, trendingSeriesData, switcherCallback, switcher, isLoading } = useTrending();
@@ -20,7 +21,7 @@ const Trending = () => {
         {!isLoading ? (
           <>
             <div className={`flex overflow-x-scroll w-full flex-nowrap px-4 py-4 fade-in ${!switcher ? "" : "hidden"}`}>
-              {trendingMoviesData?.map((value: any, index: any) => {
+              {trendingMoviesData?.map((value: MovieSummary, index: number) => {
                 return (
                   <div data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
                     <Card data={value} type="movie" key={index} />
@@ -29,7 +30,7 @@ const Trending = () => {
               })}
             </div>
             <div className={`flex overflow-x-scroll w-full flex-nowrap px-4 py-4 fade-in ${switcher ? "" : "hidden"}`}>
-              {trendingSeriesData?.map((value: any, index: any) => {
+              {trendingSeriesData?.map((value: SeriesSummary, index: number) => {
                 return (
                   <div data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
                     <Card data={value} type="tv-series" key={index} />

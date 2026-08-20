@@ -9,6 +9,7 @@ import { PersonLeftSkeleton, PersonRightSkeleton } from "@/components/shared/Ske
 import usePerson from "./Person.hook";
 import Button from "@/components/shared/Button";
 import BackButton from "@/components/shared/BackButton";
+import type { CrewMember, PersonCreditCast } from "@/types";
 
 const PersonDetail = () => {
   const {
@@ -22,9 +23,10 @@ const PersonDetail = () => {
     sortedCreditDataList,
   } = usePerson();
 
-  const CalculateAge = (birthDate: any) => {
-    const newDate: any = new Date();
-    return Math.floor((newDate - new Date(birthDate).getTime()) / 3.15576e10);
+  const CalculateAge = (birthDate: string | null | undefined) => {
+    if (!birthDate) return "-";
+    const newDate = new Date();
+    return Math.floor((newDate.getTime() - new Date(birthDate).getTime()) / 3.15576e10);
   };
 
   return (
@@ -62,7 +64,7 @@ const PersonDetail = () => {
                   data-aos-once="true"
                   style={!readMore ? { height: "220px", maxHeight: "220px", overflow: "hidden" } : {}}
                 >
-                  {detailPerson?.biography?.split("\n\n").map((val: any, index: any) => {
+                  {detailPerson?.biography?.split("\n\n").map((val: string, index: number) => {
                     return (
                       <p className="mb-[12px]" key={index}>
                         {val}
@@ -120,7 +122,7 @@ const PersonDetail = () => {
                 </div>
                 <div className="mb-2" data-aos="fade-right" data-aos-delay="100" data-aos-once="true">
                   <h4 className="font-bold text-l">Also Known As</h4>
-                  {detailPerson?.also_known_as?.map((val: any, index: any) => {
+                  {detailPerson?.also_known_as?.map((val: string, index: number) => {
                     return <p key={index}>{val}</p>;
                   })}
                 </div>
@@ -150,7 +152,7 @@ const PersonDetail = () => {
                     data-aos-delay="400"
                     style={!readMore ? { height: "220px", maxHeight: "220px", overflow: "hidden" } : {}}
                   >
-                    {detailPerson?.biography?.split("\n\n").map((val: any, index: any) => {
+                    {detailPerson?.biography?.split("\n\n").map((val: string, index: number) => {
                       return (
                         <p className="mb-[12px]" key={index}>
                           {val}
@@ -190,7 +192,7 @@ const PersonDetail = () => {
                     className={`flex overflow-x-scroll w-full flex-nowrap md:px-4 px-0 py-4 my-6`}
                     onScroll={handleScroll}
                   >
-                    {sortedCreditDataList?.slice(0, 10)?.map((val: any, index: any) => {
+                    {sortedCreditDataList?.slice(0, 10)?.map((val: PersonCreditCast, index: number) => {
                       return (
                         <div data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
                           <MovieCredit data={val} />
@@ -212,13 +214,13 @@ const PersonDetail = () => {
             <ExpMapping data={sortedCreditDataList} header={"Acting"} />
             <ExpMapping
               header={"Production"}
-              data={personCredit?.crew?.filter(function (res: any) {
+              data={personCredit?.crew?.filter(function (res: CrewMember) {
                 return res.department === "Production";
               })}
             />
             <ExpMapping
               header={"Crew"}
-              data={personCredit?.crew?.filter(function (res: any) {
+              data={personCredit?.crew?.filter(function (res: CrewMember) {
                 return res.department === "Crew";
               })}
             />

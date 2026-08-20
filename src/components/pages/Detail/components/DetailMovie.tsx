@@ -7,23 +7,32 @@ import CardSkeleton from "@/components/shared/Skeleton";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import type {
+  CastMember,
+  DetailViewProps,
+  Genre,
+  Keyword,
+  MovieDetail,
+  Review,
+} from "@/types";
 
-const DetailMovie = (props: any) => {
-  const { detailMovie, isLoading, castingList, movieReviews, externalIds, id, movieKeywords } = props;
+interface DetailMovieProps extends DetailViewProps {
+  detailMovie?: MovieDetail;
+  movieReviews?: { results: Review[] };
+}
+
+const DetailMovie = ({ detailMovie, isLoading, castingList, movieReviews, externalIds, id, movieKeywords }: DetailMovieProps) => {
   const [castingScrolled, setCastingScrolled] = useState(false);
 
   const color = ["#2ce574", "#cdf03a", "#ffe500", "#ff9600", "#ff3924"];
   const imageUrl = `https://image.tmdb.org/t/p/original`;
 
-  const timeConvert = (n: any) => {
-    const num = n;
-    const hours = num / 60;
-    const rhours = Math.floor(hours);
-    const minutes = (hours - rhours) * 60;
-    const rminutes = Math.round(minutes);
-    return rhours + "h" + " " + rminutes + "m";
+  const timeConvert = (n: number) => {
+    const hours = Math.floor(n / 60);
+    const minutes = Math.round((n / 60 - hours) * 60);
+    return hours + "h" + " " + minutes + "m";
   };
-  const bgcolor = (value: any) => {
+  const bgcolor = (value: number) => {
     if (value >= 80 && value <= 100) {
       return color[0];
     } else if (value >= 60 && value < 80) {
@@ -35,9 +44,10 @@ const DetailMovie = (props: any) => {
     } else if (value >= 0 && value < 20) {
       return color[4];
     }
+    return color[4];
   };
-  const handleScroll = (e: any) => {
-    if (e.target.scrollLeft === 0) {
+  const handleScroll = (e: React.UIEvent<HTMLElement>) => {
+    if (e.currentTarget.scrollLeft === 0) {
       setCastingScrolled(false);
     } else {
       setCastingScrolled(true);
@@ -45,13 +55,16 @@ const DetailMovie = (props: any) => {
   };
 
   const circle = () => {
-    var circle: any = document.getElementById(`circle ${detailMovie?.id}`);
-    var radius = circle?.r?.baseVal?.value;
-    var circumference: number = radius * 2 * Math.PI;
+    const el = document.getElementById(`circle ${detailMovie?.id}`);
+    if (!el) return;
+    const circleEl = el as unknown as { style: { strokeDasharray: string; strokeDashoffset: string } };
+    const radius = 24;
+    const circumference: number = radius * 2 * Math.PI;
 
-    circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    circle.style.strokeDashoffset =
-      circumference - (Number(detailMovie?.vote_average?.toString().slice(0, 3)) / 10) * circumference;
+    circleEl.style.strokeDasharray = `${circumference} ${circumference}`;
+    circleEl.style.strokeDashoffset = `${
+      circumference - (Number(detailMovie?.vote_average ?? 0) / 10) * circumference
+    }`;
   };
 
   useEffect(() => {
@@ -106,7 +119,7 @@ const DetailMovie = (props: any) => {
                   </svg>
                 </span>
                 <span>
-                  {detailMovie?.genres?.map((val: any) => {
+                  {detailMovie?.genres?.map((val: Genre) => {
                     return val.name + ", ";
                   })}
                 </span>
@@ -122,7 +135,7 @@ const DetailMovie = (props: any) => {
                     <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                   </svg>
                 </span>
-                <span>{timeConvert(detailMovie?.runtime)}</span>
+                <span>{timeConvert(detailMovie?.runtime ?? 0)}</span>
                 <p></p>
               </div>
 
@@ -141,7 +154,11 @@ const DetailMovie = (props: any) => {
                       width="56"
                       height="56"
                       style={{
-                        color: bgcolor(detailMovie?.vote_average?.toString().slice(0, 3) * 10),
+                        color: bgcolor(
+                          detailMovie?.vote_average
+                            ? Number(detailMovie.vote_average.toString().slice(0, 3)) * 10
+                            : 0
+                        ),
                         left: 0,
                         bottom: 0,
                       }}
@@ -149,7 +166,7 @@ const DetailMovie = (props: any) => {
                       <circle
                         id={`circle ${detailMovie?.id}`}
                         // className="progress-ring__circle"
-                        stroke={bgcolor(detailMovie?.vote_average * 10)}
+                        stroke={bgcolor(detailMovie?.vote_average ? detailMovie.vote_average * 10 : 0)}
                         strokeWidth="2"
                         fill="#001D3D"
                         r="24"
@@ -247,7 +264,7 @@ const DetailMovie = (props: any) => {
             {!isLoading ? (
               <div className={`relative ${castingScrolled ? "scrolled" : ""}`} id="cast_scroller">
                 <div className={`flex overflow-x-scroll w-full flex-nowrap px-4 py-4 my-6`} onScroll={handleScroll}>
-                  {castingList?.cast?.slice(0, 10).map((val: any, index: any) => {
+                  {castingList?.cast?.slice(0, 10).map((val: CastMember, index: number) => {
                     return (
                       <div className="" data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
                         <CastingList data={val} />
@@ -288,7 +305,7 @@ const DetailMovie = (props: any) => {
             )}
           </div>
           <div className="flex flex-col border-1 rounded-md border border-gray-700 p-4 box-shadow mt-4">
-            {movieReviews?.results?.map((val: any, index: number) => {
+            {movieReviews?.results?.map((val: Review, index: number) => {
               return (
                 <div className="flex flex-col" key={index}>
                   <div className="flex">
@@ -396,7 +413,7 @@ const DetailMovie = (props: any) => {
                 <h4 className="text-[16px] font-bold">Budget</h4>
               </GeneralFieldSkeleton>
               <GeneralFieldSkeleton isLoading={isLoading} width="30%">
-                <p className="text-[16px]">{UsdFormatter.format(detailMovie?.budget)}</p>
+                <p className="text-[16px]">{UsdFormatter.format(detailMovie?.budget ?? 0)}</p>
               </GeneralFieldSkeleton>
             </div>
             <div className="w-full mb-4">
@@ -404,13 +421,13 @@ const DetailMovie = (props: any) => {
                 <h4 className="text-[16px] font-bold">Revenue</h4>
               </GeneralFieldSkeleton>
               <GeneralFieldSkeleton isLoading={isLoading} width="32%">
-                <p className="text-[16px]">{UsdFormatter.format(detailMovie?.revenue)}</p>
+                <p className="text-[16px]">{UsdFormatter.format(detailMovie?.revenue ?? 0)}</p>
               </GeneralFieldSkeleton>
             </div>
             <div className="w-full">
               <h4 className="text-[16px] font-bold">Keywords</h4>
               <div className="text-[16px] flex flex-wrap">
-                {movieKeywords?.map((val: any, index: any) => {
+                {movieKeywords?.map((val: Keyword, index: number) => {
                   return (
                     <span
                       className="mr-2 mb-2 bg-gray-700 p-1 border rounded border-[#59677d]"

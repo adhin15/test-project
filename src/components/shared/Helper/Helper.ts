@@ -9,7 +9,9 @@ export const UsdFormatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
 
-export const formatDate = (val:any) => {
+export const formatDate = (val: string | Date | null | undefined) => {
+    if (!val) return "";
+    const d = new Date(val);
     const monthList = [
       "January",
       "February",
@@ -24,14 +26,14 @@ export const formatDate = (val:any) => {
       "November",
       "December",
     ];
-    const month = monthList[new Date(val)?.getMonth()];
-    const date = new Date(val)?.getDate();
-    const year = new Date(val)?.getFullYear();
+    const month = monthList[d.getMonth()];
+    const date = d.getDate();
+    const year = d.getFullYear();
 
     return month + ", " + date + ", " + year;
   };
 
-  export  const generateImageUrl = (url: string, ) => {
+  export  const generateImageUrl = (url: string | null | undefined) => {
     const imageUrl = `https://image.tmdb.org/t/p/original/`;
     if (!url) return "/user.png";
 

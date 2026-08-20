@@ -1,6 +1,10 @@
-const ModalPlayer = (props: any) => {
-  const { modalOpened, closeModal, youtubeId } = props;
+type ModalPlayerProps = {
+  modalOpened: boolean;
+  closeModal: () => void;
+  youtubeId?: string;
+};
 
+const ModalPlayer = ({ modalOpened, closeModal, youtubeId }: ModalPlayerProps) => {
   return (
     <div
       className="w-[100vw] h-[100vh] fixed top-0 transition-ease-in"

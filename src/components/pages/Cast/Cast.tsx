@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import dynamic from "next/dynamic";
 import { generateImageUrl } from "@/components/shared/Helper/Helper";
+import type { CastMember, CrewMember } from "@/types";
 import useCast from "./Cast.hook";
 import CastHeaderSkeleton from "@/components/shared/Skeleton/CastHeaderSkeleton";
 import CastSkeleton from "@/components/shared/Skeleton/CastSkeleton";
@@ -12,6 +13,16 @@ import BackButton from "@/components/shared/BackButton";
 
 const Cast = () => {
   const { castingList, detailMovie, isLoading } = useCast();
+
+  // Both MovieDetail and SeriesDetail expose a display title (title vs name)
+  // and a release date (release_date vs first_air_date). Narrow on presence.
+  const detailTitle =
+    detailMovie && "title" in detailMovie ? detailMovie.title : detailMovie?.name;
+  const releaseRaw =
+    detailMovie && "release_date" in detailMovie
+      ? detailMovie.release_date
+      : detailMovie?.first_air_date;
+  const detailRelease = releaseRaw?.slice(0, 4);
 
   return (
     <div className="px-4 md:px-12">
@@ -22,12 +33,12 @@ const Cast = () => {
               src={generateImageUrl(detailMovie?.poster_path)}
               className="w-[20%] max-w-[58px] h-[87px] object-cover lazy-load-image rounded"
               data-aos="fade-right"
-              alt={detailMovie?.name || detailMovie?.title || "Poster"}
+              alt={detailTitle || "Poster"}
             />
             <div className="flex flex-col flex-wrap text-left ps-0 max-w-[70%] ps-4">
               <h3 className="text-2xl font-bold" data-aos="fade-right">
-                {detailMovie?.name || detailMovie?.title} (
-                {detailMovie?.release_date?.slice(0, 4) || detailMovie?.first_air_date?.slice(0, 4)})
+                {detailTitle} (
+                {detailRelease})
               </h3>
               <div className="text-left flex items-center gap-[8px]">
                 <BackButton />
@@ -45,7 +56,7 @@ const Cast = () => {
               Cast <span className="font-normal opacity-70">{castingList?.cast?.length}</span>{" "}
             </h3>
             {!isLoading ? (
-              castingList?.cast?.map((val: any, index: any) => {
+              castingList?.cast?.map((val: CastMember, index: number) => {
                 return (
                   <div className="flex w-full mb-8" key={index} data-aos="fade-right">
                     <img
@@ -74,7 +85,7 @@ const Cast = () => {
               Crew <span className="font-normal opacity-70">{castingList?.crew?.length}</span>{" "}
             </h3>
             {!isLoading ? (
-              castingList?.crew?.map((val: any, index: any) => {
+              castingList?.crew?.map((val: CrewMember, index: number) => {
                 return (
                   <div className="flex w-full mb-8" key={index} data-aos="fade-left">
                     <img

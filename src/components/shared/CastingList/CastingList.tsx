@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { generateImageUrl } from "../Helper/Helper";
+import type { CastMember } from "@/types";
 
-const CastingList = (props: any) => {
-  const { data } = props;
-
+const CastingList = ({ data }: { data: CastMember }) => {
   return (
     <>
       <div

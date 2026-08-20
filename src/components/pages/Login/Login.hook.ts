@@ -7,7 +7,11 @@ const useLogin = () =>{
 
     const { mutate: doLogin, isPending: isLoginLoading } = usePostLogin({
         onError: (err) => {
-            setErrorMessage(err)
+            setErrorMessage(
+              err && typeof err === "object" && "message" in err
+                ? { message: String((err as { message: unknown }).message) }
+                : { message: "Login failed. Please try again." }
+            );
         },
         onSuccess: () => {
             window.location.replace("/");
@@ -15,13 +19,12 @@ const useLogin = () =>{
       });
 
 
-      const handleSubmitLogin = (e: any) => {
+      const handleSubmitLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const payload = {
-          username: e.target[0].value,
-          password: e.target[1].value,
-        };
-        doLogin(payload)
+        const form = e.currentTarget;
+        const username = (form.querySelector("input[name='username']") as HTMLInputElement)?.value ?? "";
+        const password = (form.querySelector("input[name='password']") as HTMLInputElement)?.value ?? "";
+        doLogin({ username, password });
       };
     return {
         handleSubmitLogin,

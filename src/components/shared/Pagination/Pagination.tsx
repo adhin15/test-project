@@ -1,8 +1,13 @@
-const Pagination = (props: any) => {
-  const { totalPages, currentPage, setPage } = props;
+type PaginationProps = {
+  totalPages?: number;
+  currentPage: number;
+  setPage: (page: number) => void;
+};
+
+const Pagination = ({ totalPages = 0, currentPage, setPage }: PaginationProps) => {
   return (
     <div>
-      {[...Array(totalPages)].map((page, i) => {
+      {[...Array(totalPages)].map((_, i) => {
         return (
           <span
             className={`px-2 cursor-pointer hover:opacity-75 ${currentPage == i + 1 ? "bg-[#012459]" : ""}`}

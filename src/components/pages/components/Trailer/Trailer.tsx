@@ -5,6 +5,7 @@ import TrailerCard from "@/components/shared/TrailerCard";
 import TrailerCardSkeleton from "@/components/shared/Skeleton/TrailerCardSkeleton";
 import ModalPlayer from "@/components/shared/ModalPlayer";
 import useTrailer from "./trailer.hook";
+import type { MovieSummary, SeriesSummary } from "@/types";
 
 const Trailer = () => {
   const {
@@ -43,7 +44,7 @@ const Trailer = () => {
           {!isLoading ? (
             <>
               <div className={`flex overflow-x-scroll w-full flex-nowrap px-4 py-4 fade-in`} data-aos="fade-left">
-                {upcomingMoviesData?.results?.map((value: any, index: any) => {
+                {upcomingMoviesData?.results?.map((value: MovieSummary | SeriesSummary, index: number) => {
                   return (
                     <div data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
                       <TrailerCard
@@ -51,7 +52,6 @@ const Trailer = () => {
                           changeBg(value.backdrop_path);
                         }}
                         data={value}
-                        type="movie"
                         key={index}
                         onClick={() => {
                           playTrailer(value);

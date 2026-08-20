@@ -1,9 +1,8 @@
 import { generateImageUrl } from "@/components/shared/Helper/Helper";
 import Link from "next/link";
+import type { PersonCreditCast } from "@/types";
 
-const MovieCredit = (props: any) => {
-  const { data } = props;
-
+const MovieCredit = ({ data }: { data: PersonCreditCast }) => {
   return (
     <>
       <div
@@ -18,7 +17,7 @@ const MovieCredit = (props: any) => {
               alt=""
             />
           </div>
-          <h2 className="pt-2 text-center">{data.title}</h2>
+          <h2 className="pt-2 text-center">{data.title || data.name}</h2>
           <p className="text-center">as</p>
           <h3 className="pb-2 text-center font-bold">{data.character}</h3>
         </Link>

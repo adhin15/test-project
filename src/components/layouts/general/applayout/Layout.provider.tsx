@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import useGetAccountDetail from "./hooks/useGetDetailAccount";
+import type { AccountDetail } from "@/types";
 import Cookies from "js-cookie";
 
 const LayoutProvider = () => {
@@ -9,7 +10,7 @@ const LayoutProvider = () => {
 
   const { mutate: detailData } = useGetAccountDetail({
     onError: () => {},
-    onSuccess: (val: any) => {
+    onSuccess: (val: AccountDetail | undefined) => {
       Cookies.set("MoFlixxUser", JSON.stringify({ ...val, session_id: userData?.session_id }));
     },
   });

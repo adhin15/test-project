@@ -14,7 +14,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
-  const inputRef: any = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleScroll = () => {
     const offset = window.scrollY;
@@ -34,9 +34,10 @@ const Navbar = () => {
   const getInitial = (params: string) => {
     return params[0];
   };
-  const submitSearch = (e: any) => {
+  const submitSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    window.location.replace(`/search?query=${e.target[0].value}`);
+    const input = e.currentTarget.querySelector("input[type='text']") as HTMLInputElement | null;
+    window.location.replace(`/search?query=${input?.value ?? ""}`);
   };
 
   return (
@@ -71,7 +72,7 @@ const Navbar = () => {
               onClick={() => {
                 setShowSearch(true);
                 setTimeout(() => {
-                  inputRef.current.focus();
+                  inputRef.current?.focus();
                 }, 500);
               }}
               className={showSearch ? "move-out-button" : "move-in-button"}

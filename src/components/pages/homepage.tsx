@@ -15,9 +15,11 @@ const Home = () => {
     timeWindow: "day",
   });
 
-  const submitSearch = (e: any) => {
+  const submitSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    window.location.replace(`/search?query=${e.target[0].value}`);
+    const form = e.currentTarget;
+    const input = form.querySelector("input[name='searchinput']") as HTMLInputElement | null;
+    window.location.replace(`/search?query=${input?.value ?? ""}`);
   };
 
   return (

@@ -1,11 +1,16 @@
 import Link from "next/link";
-import react, { useEffect } from "react";
+import { useEffect } from "react";
+import type { MovieSummary, SeriesSummary } from "@/types";
 
-const Card = (props: any) => {
-  const { data, type } = props;
+type CardProps = {
+  data: MovieSummary | SeriesSummary;
+  type: string;
+};
+
+const Card = ({ data, type }: CardProps) => {
   const color = ["#2ce574", "#cdf03a", "#ffe500", "#ff9600", "#ff3924"];
 
-  const bgcolor = (value: any) => {
+  const bgcolor = (value: number) => {
     if (value >= 80 && value <= 100) {
       return color[0];
     } else if (value >= 60 && value < 80) {
@@ -17,26 +22,38 @@ const Card = (props: any) => {
     } else if (value >= 0 && value < 20) {
       return color[4];
     }
+    return color[4];
   };
   const circle = () => {
-    var circle: any = document.getElementById(`circle ${data.id}`);
-    if (!circle) return;
-    var radius = circle.r.baseVal.value;
-    var circumference = radius * 2 * Math.PI;
+    const el = document.getElementById(`circle ${data.id}`);
+    if (!el) return;
+    const circleEl = el as unknown as {
+      r: { baseVal: { value: number } };
+      style: { strokeDasharray: string; strokeDashoffset: string };
+    };
+    const radius = circleEl.r.baseVal.value;
+    const circumference = radius * 2 * Math.PI;
 
-    circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    circle.style.strokeDashoffset = circumference - (data?.vote_average / 10) * circumference;
+    circleEl.style.strokeDasharray = `${circumference} ${circumference}`;
+    circleEl.style.strokeDashoffset = `${
+      circumference - (data?.vote_average / 10) * circumference
+    }`;
   };
 
   const redirectType = (type: string) => {
+    const title = "title" in data ? data.title : data.name;
     if (type === "movies")
-      return `/${type + "/" + data?.id}/-${data?.title?.toLowerCase()?.replaceAll(" ", "_")?.replaceAll(":", "")}`;
+      return `/${type + "/" + data?.id}/-${title?.toLowerCase()?.replaceAll(" ", "_")?.replaceAll(":", "")}`;
     return `/${type + "/" + data?.id}/`;
   };
 
   useEffect(() => {
     circle();
   }, [data]);
+
+  const title = "title" in data ? data.title : data.name;
+  const release = "release_date" in data ? data.release_date : data.first_air_date;
+
   return (
     <div className="mr-4 max-w-[150px] relative transition-transform duration-100 transform hover:scale-110 peer">
       <Link href={redirectType(type)}>
@@ -60,7 +77,6 @@ const Card = (props: any) => {
             >
               <circle
                 id={`circle ${data.id}`}
-                // className="progress-ring__circle"
                 stroke={bgcolor(data.vote_average * 10)}
                 strokeWidth="2"
                 fill="#001D3D"
@@ -73,8 +89,8 @@ const Card = (props: any) => {
             </svg>
           </div>
         </div>
-        <h2 className="mt-5 font-bold">{data.title || data.name}</h2>
-        <p className="font-normal opacity-50">{data.release_date || data.first_air_date}</p>
+        <h2 className="mt-5 font-bold">{title}</h2>
+        <p className="font-normal opacity-50">{release}</p>
       </Link>
     </div>
   );

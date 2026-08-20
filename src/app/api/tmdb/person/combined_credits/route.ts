@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 
 const url = process.env.TMDB_BASE_URL;
 
-const getPersonCredit = async (id:any) => {
+const getPersonCredit = async (id: string) => {
     const fullUrl = `${url}/person/${id}/combined_credits`;
     try {
       const response = await fetch(fullUrl, {

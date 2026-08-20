@@ -13,7 +13,7 @@ const useSearch = () => {
 
   const { data: searchMovieResult, isLoading: isSearchMovieResultLoading } = useSearchMovie({
     payload: {
-      keyword: query,
+      keyword: query ?? undefined,
       page: page,
       adult: false,
     },
@@ -21,7 +21,7 @@ const useSearch = () => {
 
   const { data: searchTvResult, isLoading: isSearchTvResultLoading } = useSearchTv({
     payload: {
-      keyword: query,
+      keyword: query ?? undefined,
       page: page,
       adult: false,
     },
@@ -29,7 +29,7 @@ const useSearch = () => {
 
   const { data: searchMultiResult, isLoading: isSearchMultiResultLoading } = useSearchMulti({
     payload: {
-      keyword: query,
+      keyword: query ?? undefined,
       page: page,
       adult: false,
     },
@@ -59,7 +59,9 @@ const useSearch = () => {
 
   useEffect(() => {
     if (!isLoading) {
-      if (searchMovieResult?.total_pages > searchTvResult?.total_pages) {
+      const moviePages = searchMovieResult?.total_pages ?? 0;
+      const tvPages = searchTvResult?.total_pages ?? 0;
+      if (moviePages > tvPages) {
         setActive("movie");
       } else {
         setActive("tv");

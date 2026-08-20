@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server";
 const url = process.env.TMDB_BASE_URL;
 
 
-const validateLogout = async (payload:any) => {
+const validateLogout = async (payload: string) => {
       
     const fullUrl = `${url}/authentication/session`;
     try {

@@ -1,16 +1,24 @@
-import Image from "next/image";
+import type { CSSProperties } from "react";
 
 type ImageContainerTypes = {
   src: string;
   width?: number | string;
   height?: number | string;
   alt?: string;
-  style?: any;
+  style?: CSSProperties;
   className?: string;
-  objectFit?: string;
+  objectFit?: CSSProperties["objectFit"];
 };
-const ImageContainer = (props: ImageContainerTypes) => {
-  const { src, width = "auto", height = "auto", alt, style, className, objectFit = "cover" } = props;
+
+const ImageContainer = ({
+  src,
+  width = "auto",
+  height = "auto",
+  alt,
+  style,
+  className,
+  objectFit = "cover",
+}: ImageContainerTypes) => {
   return (
     <div
       className={className}
@@ -21,11 +29,9 @@ const ImageContainer = (props: ImageContainerTypes) => {
         ...style,
       }}
     >
-      <Image
+      <img
         src={src}
-        width={1000}
-        height={1000}
-        alt={"example"}
+        alt={alt ?? "example"}
         style={{ objectFit: objectFit, height: height, width: width, ...style }}
       />
     </div>

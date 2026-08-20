@@ -1,17 +1,17 @@
 import { generateImageUrl } from "@/components/shared/Helper/Helper";
 import Link from "next/link";
-import react, { useEffect } from "react";
+import type { MovieSummary, SeriesSummary } from "@/types";
 
-const SearchResult = (props: any) => {
-  const { data, type } = props;
-  const imageUrl = `https://www.themoviedb.org/t/p/original`;
-
-  const redirectType = (type: any) => {
+const SearchResult = ({ data, type }: { data: MovieSummary | SeriesSummary; type: string }) => {
+  const redirectType = (type: string) => {
     if (type === "movie") {
       return `/${type + "/" + data?.id}`;
     }
     return `/${"tv-series" + "/" + data?.id}/`;
   };
+
+  const title = "title" in data ? data.title : data.name;
+  const release = "release_date" in data ? data.release_date : data.first_air_date;
 
   return (
     <div className="mb-5 transition-transform duration-100 transform hover:scale-105 peer">
@@ -23,9 +23,9 @@ const SearchResult = (props: any) => {
             alt=""
           />
           <div className="p-[20px]">
-            <h3 className="font-bold text-xl">{data?.title || data?.name}</h3>
+            <h3 className="font-bold text-xl">{title}</h3>
             <div className="flex gap-[4px] text-sm items-center font-bold">
-              <span>{data?.release_date || data?.first_air_date}</span>
+              <span>{release}</span>
             </div>
             <p className="text-sm my-[12px] text-overflow-ellipsis">{data?.overview}</p>
           </div>

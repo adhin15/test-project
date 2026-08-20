@@ -14,7 +14,7 @@ const useNavbar = () => {
   });
 
   const handleLogout = () => {
-    doLogout({ session_id: userData?.session_id });
+    doLogout({ session_id: userData?.session_id ?? "" });
   };
   return {
     handleLogout,

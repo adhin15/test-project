@@ -22,7 +22,7 @@ const getRequestToken = async () => {
   }
 };
 
-const validateLogin = async (payload:any) => {
+const validateLogin = async (payload: string) => {
     
     const fullUrl = `${url}/authentication/token/validate_with_login`;
     try {
@@ -41,7 +41,7 @@ const validateLogin = async (payload:any) => {
     }
 };
 
-const validateSession = async (payload:any) => {
+const validateSession = async (payload: string) => {
     const fullUrl = `${url}/authentication/session/new`;
     try {
       const response = await fetch(fullUrl, {

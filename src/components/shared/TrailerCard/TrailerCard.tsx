@@ -1,6 +1,13 @@
-const TrailerCard = (props: any) => {
-  const { data, onMouseOver, onClick } = props;
+import type { MovieSummary, SeriesSummary } from "@/types";
 
+type TrailerCardProps = {
+  data: MovieSummary | SeriesSummary;
+  onMouseOver?: () => void;
+  onClick?: () => void;
+};
+
+const TrailerCard = ({ data, onMouseOver, onClick }: TrailerCardProps) => {
+  const title = "title" in data ? data.title : data.name;
   return (
     <div className="mr-4 relative max-w-[300px] transition-transform duration-100 transform hover:scale-105 peer">
       <div
@@ -27,7 +34,7 @@ const TrailerCard = (props: any) => {
           </svg>
         </div>
       </div>
-      <h2 className="mt-5 font-bold text-center">{data.title || data.name}</h2>
+      <h2 className="mt-5 font-bold text-center">{title}</h2>
     </div>
   );
 };

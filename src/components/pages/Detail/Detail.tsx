@@ -12,7 +12,7 @@ const Detail = () => {
       <div className="w-full max-w-full py-5 px-6 md:px-12">
         {type === "movie" ? (
           <DetailMovie
-            detailMovie={detailMovie}
+            detailMovie={detailMovie && "title" in detailMovie ? detailMovie : undefined}
             isLoading={isLoading}
             castingList={castingList}
             externalIds={externalIds}
@@ -22,7 +22,7 @@ const Detail = () => {
           />
         ) : (
           <DetailSeries
-            detailTv={detailMovie}
+            detailTv={detailMovie && "name" in detailMovie ? detailMovie : undefined}
             isLoading={isLoading}
             castingList={castingList}
             externalIds={externalIds}

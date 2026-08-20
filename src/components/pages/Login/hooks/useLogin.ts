@@ -1,25 +1,17 @@
 import { authLogin } from '@/services/Auth/api';
+import type { LoginPayload } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 
-type payloadLogin = {
-    username:string,
-    password:string
-}
 const usePostLogin = ({
   onSuccess = () => { },
-  onError = (err:any) => {},
+  onError = (_err: unknown) => {},
 }) => {
   const mutation = useMutation({
     mutationFn: async ({
         username,
         password
-    }:payloadLogin) => {
-      const res = await authLogin(JSON.stringify(
-        {
-            username,
-            password
-        }
-      ));
+    }: LoginPayload) => {
+      const res = await authLogin({ username, password });
       return res;
     },
     onError:(err) => {

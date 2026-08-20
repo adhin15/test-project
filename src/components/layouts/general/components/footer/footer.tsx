@@ -1,23 +1,6 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
-const Footer = (props: any) => {
-  const [scrolled, setScrolled] = useState(false);
-
-  const handleScroll = () => {
-    const offset = window.scrollY;
-
-    if (offset > 100) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-  }, []);
-
+const Footer = () => {
   return (
     <>
       <div

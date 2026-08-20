@@ -8,33 +8,44 @@ import CardSkeleton from "@/components/shared/Skeleton";
 import { formatDate, votePercentage } from "@/components/shared/Helper/Helper";
 import StarReview from "@/components/shared/StarRreview";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
+import type {
+  CastMember,
+  DetailViewProps,
+  Genre,
+  Keyword,
+  SeriesDetail,
+  SeriesSeason,
+} from "@/types";
 
-const DetailSeries = (props: any) => {
-  const { detailTv, isLoading, castingList, externalIds, id, movieKeywords } = props;
+interface DetailSeriesProps extends DetailViewProps {
+  detailTv?: SeriesDetail;
+}
+
+const DetailSeries = ({ detailTv, isLoading, castingList, externalIds, id, movieKeywords }: DetailSeriesProps) => {
   const imageUrl = `https://image.tmdb.org/t/p/original`;
   const color = ["#2ce574", "#cdf03a", "#ffe500", "#ff9600", "#ff3924"];
   const [castingScrolled, setCastingScrolled] = useState(false);
 
   const circle = () => {
-    var circle: any = document.getElementById(`circle ${detailTv?.id}`);
-    var radius = circle.r.baseVal.value;
-    var circumference: number = radius * 2 * Math.PI;
+    const el = document.getElementById(`circle ${detailTv?.id}`);
+    if (!el) return;
+    const circleEl = el as unknown as { r: { baseVal: { value: number } }; style: { strokeDasharray: string; strokeDashoffset: string } };
+    const radius = circleEl.r.baseVal.value;
+    const circumference: number = radius * 2 * Math.PI;
 
-    circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    circle.style.strokeDashoffset =
-      circumference - (Number(detailTv?.vote_average.toString().slice(0, 3)) / 10) * circumference;
+    circleEl.style.strokeDasharray = `${circumference} ${circumference}`;
+    circleEl.style.strokeDashoffset = `${
+      circumference - (Number(detailTv?.vote_average ?? 0) / 10) * circumference
+    }`;
   };
 
-  const timeConvert = (n: any) => {
-    const num = n;
-    const hours = num / 60;
-    const rhours = Math.floor(hours);
-    const minutes = (hours - rhours) * 60;
-    const rminutes = Math.round(minutes);
-    return rhours + "h" + " " + rminutes + "m";
+  const timeConvert = (n: number) => {
+    const hours = Math.floor(n / 60);
+    const minutes = Math.round((n / 60 - hours) * 60);
+    return hours + "h" + " " + minutes + "m";
   };
 
-  const bgcolor = (value: any) => {
+  const bgcolor = (value: number) => {
     if (value >= 80 && value <= 100) {
       return color[0];
     } else if (value >= 60 && value < 80) {
@@ -46,9 +57,10 @@ const DetailSeries = (props: any) => {
     } else if (value >= 0 && value < 20) {
       return color[4];
     }
+    return color[4];
   };
-  const handleScroll = (e: any) => {
-    if (e.target.scrollLeft === 0) {
+  const handleScroll = (e: React.UIEvent<HTMLElement>) => {
+    if (e.currentTarget.scrollLeft === 0) {
       setCastingScrolled(false);
     } else {
       setCastingScrolled(true);
@@ -92,7 +104,7 @@ const DetailSeries = (props: any) => {
                 data-aos-delay="400"
               >
                 <span>
-                  {detailTv?.release_date} ({detailTv?.production_countries[0]?.iso_3166_1})
+                  {detailTv?.first_air_date} ({detailTv?.production_countries[0]?.iso_3166_1})
                 </span>
                 <span className="hidden md:block">
                   <svg
@@ -107,7 +119,7 @@ const DetailSeries = (props: any) => {
                   </svg>
                 </span>
                 <span>
-                  {detailTv?.genres?.map((val: any) => {
+                  {detailTv?.genres?.map((val: Genre) => {
                     return val.name + ", ";
                   })}
                 </span>
@@ -123,7 +135,7 @@ const DetailSeries = (props: any) => {
                     <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                   </svg>
                 </span>
-                <span>{timeConvert(detailTv?.episode_run_time)}</span>
+                <span>{timeConvert(detailTv?.episode_run_time?.[0] ?? 0)}</span>
                 <p></p>
               </div>
 
@@ -142,7 +154,11 @@ const DetailSeries = (props: any) => {
                       width="56"
                       height="56"
                       style={{
-                        color: bgcolor(detailTv?.vote_average?.toString().slice(0, 3) * 10),
+                        color: bgcolor(
+                          detailTv?.vote_average
+                            ? Number(detailTv.vote_average.toString().slice(0, 3)) * 10
+                            : 0
+                        ),
                         left: 0,
                         bottom: 0,
                       }}
@@ -150,7 +166,7 @@ const DetailSeries = (props: any) => {
                       <circle
                         id={`circle ${detailTv?.id}`}
                         // className="progress-ring__circle"
-                        stroke={bgcolor(detailTv?.vote_average * 10)}
+                        stroke={bgcolor(detailTv?.vote_average ? detailTv.vote_average * 10 : 0)}
                         strokeWidth="2"
                         fill="#001D3D"
                         r="24"
@@ -247,7 +263,7 @@ const DetailSeries = (props: any) => {
             {!isLoading ? (
               <div className={`relative ${castingScrolled ? "scrolled" : ""}`} id="cast_scroller">
                 <div className={`flex overflow-x-scroll w-full flex-nowrap px-4 py-4 my-6`} onScroll={handleScroll}>
-                  {castingList?.cast?.slice(0, 10).map((val: any, index: any) => {
+                  {castingList?.cast?.slice(0, 10).map((val: CastMember, index: number) => {
                     return (
                       <div className="" data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
                         <CastingList data={val} />
@@ -451,7 +467,7 @@ const DetailSeries = (props: any) => {
 
               <GeneralFieldSkeleton isLoading={isLoading} width="50%">
                 <div className="text-[16px] flex flex-wrap	gap-x-2">
-                  {detailTv?.networks?.map((val: any, index: any) => {
+                  {detailTv?.networks?.map((val: { id: number; name: string; logo_path: string | null }, index: number) => {
                     return (
                       <div key={index}>
                         <img
@@ -484,7 +500,7 @@ const DetailSeries = (props: any) => {
 
               <GeneralFieldSkeleton isLoading={isLoading} width="80%">
                 <div className="text-[16px] flex flex-wrap">
-                  {movieKeywords?.map((val: any, index: any) => {
+                  {movieKeywords?.map((val: Keyword, index: number) => {
                     return (
                       <span
                         className="mr-2 mb-2 bg-gray-700 p-1 border rounded border-[#59677d]"

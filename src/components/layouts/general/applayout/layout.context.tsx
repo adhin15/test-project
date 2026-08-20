@@ -1,27 +1,19 @@
 import { createContext, useContext } from "react";
+import type { AccountDetail } from "@/types";
 
-export const GlobalContext: any = createContext(undefined);
-interface ProviderContextType {
-  userData: {
-    avatar: {
-      gravatar: {
-        hash: "515dd274e9a649ca1a0272ee19d391cd";
-      };
-      tmdb: {
-        avatar_path: null;
-      };
-    };
-    id: string;
-    iso_639_1: string;
-    iso_3166_1: string;
-    name: string;
-    include_adult: boolean;
-    username: string;
-    session_id: string;
-  };
+export interface UserData extends AccountDetail {
+  session_id?: string;
 }
 
+export interface GlobalContextValue {
+  userData?: UserData;
+}
+
+export const GlobalContext = createContext<GlobalContextValue>({
+  userData: undefined,
+});
+
 export const useGlobalContext = () => {
-  const ctx = useContext<ProviderContextType>(GlobalContext);
+  const ctx = useContext<GlobalContextValue>(GlobalContext);
   return ctx;
 };

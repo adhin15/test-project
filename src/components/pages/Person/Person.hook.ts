@@ -1,10 +1,12 @@
 import { useParams } from "next/navigation";
 import useGetDetailPerson from "./hooks/useGetDetailPerson";
 import useGetPersonCredit from "./hooks/useGetPersonCredit";
+import type { PersonCreditCast } from "@/types";
 import { useEffect, useMemo, useState } from "react";
 
 const usePerson = () =>{
     const { id } = useParams();
+    const idValue = (Array.isArray(id) ? id[0] : id) ?? "";
 
       const [readMore, setReadMore] = useState(false);
 
@@ -12,8 +14,8 @@ const usePerson = () =>{
 
     
       
-  const handleScroll = (e:any) => {
-    if (e.target.scrollLeft === 0) {
+  const handleScroll = (e: React.UIEvent<HTMLElement>) => {
+    if (e.currentTarget.scrollLeft === 0) {
       setCastingScrolled(false);
     } else {
       setCastingScrolled(true);
@@ -21,22 +23,24 @@ const usePerson = () =>{
   };
 
   const { data: detailPerson, isLoading: isDetailPersonLoading } = useGetDetailPerson({
-        payload: { id },
+        payload: { id: idValue },
       });
 
   const { data: personCredit, isLoading: isPersonCreditLoading } = useGetPersonCredit({
-    payload: { id },
+    payload: { id: idValue },
   });
 
-  const sortedCreditDataList = personCredit?.cast?.sort((a: any, b: any) => {
-    if ((a.release_date || a.first_air_date) === "" && (b.release_date || b.first_air_date) !== "") {
+  const sortedCreditDataList = personCredit?.cast?.sort((a, b) => {
+    const aDate = a.release_date || a.first_air_date || "";
+    const bDate = b.release_date || b.first_air_date || "";
+    if (aDate === "" && bDate !== "") {
       return -1; // Place empty values at the front
-    } else if ((a.release_date || a.first_air_date) !== "" && (b.release_date || b.first_air_date) === "") {
+    } else if (aDate !== "" && bDate === "") {
       return 1; // Place empty values at the front
-    } else if ((a.release_date || a.first_air_date) === "" && (b.release_date || b.first_air_date) === "") {
+    } else if (aDate === "" && bDate === "") {
       return 0; // If both are empty, keep the order unchanged
     } else {
-      return (b.release_date || b.first_air_date)?.localeCompare(a.release_date || b.first_air_date); // Compare non-empty dates in descending order
+      return bDate.localeCompare(aDate); // Compare non-empty dates in descending order
     }
   });
 

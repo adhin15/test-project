@@ -4,6 +4,7 @@ import Pagination from "@/components/shared/Pagination";
 import SearchSkeleton from "@/components/shared/Skeleton/SearchSkeleton";
 import SearchResult from "./components/SearchResult";
 import useSearch from "./Search.hook";
+import type { TrendingItem } from "@/types";
 
 const SearchPage = () => {
   const { searchResult, allMetaData, isLoading, page, setPage, active, setActive, totalPage } = useSearch();
@@ -44,7 +45,7 @@ const SearchPage = () => {
       <div className="md:w-2/3 w-full md:pl-4">
         <div>
           {!isLoading ? (
-            searchResult?.results?.map((val: any, index: any) => {
+            searchResult?.results?.map((val: TrendingItem, index: number) => {
               return (
                 <div data-aos="fade-up" data-aos-delay={100} key={index}>
                   <SearchResult data={val} type={active} />

@@ -1,5 +1,4 @@
-const StarReview = (props: any) => {
-  const { voteAverage } = props;
+const StarReview = ({ voteAverage }: { voteAverage?: number }) => {
   return (
     <div className="bg-[#374151] p-[4px] px-[6px] flex rounded-[8px] items-center gap-[4px] text-xs">
       <svg
