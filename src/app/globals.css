@@ -2,16 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root,
+[data-theme="dark"] {
+  /* Dark theme (default, dark-only untuk sekarang) */
+  --background: #000814;
+  --foreground: #ededed;
+
+  --surface: #001d3d;
+  --surface-2: #003566;
+  --border: #374151;
+  --border-light: #59677d;
+
+  --accent: #ffc300;
+  --accent-foreground: #000000;
+  --danger: #e84c3d;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Light theme — struktur siap, BELUM diaktifkan.
+   Untuk beralih tema nanti, cukup ubah data-theme pada <html>. */
+[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  --surface: #f4f4f5;
+  --surface-2: #e4e4e7;
+  --border: #d4d4d8;
+  --border-light: #a1a1aa;
+
+  --accent: #ffc300;
+  --accent-foreground: #000000;
+  --danger: #e84c3d;
 }
 
 ::-webkit-scrollbar {
@@ -62,7 +82,7 @@
 
 body {
   color: var(--foreground);
-  background: #000814;
+  background: var(--background);
   font-family: Monserrat;
 }
 
@@ -78,15 +98,15 @@ body {
 }
 
 .bg-footer-accent {
-  background-color: #003566;
+  background-color: var(--surface-2);
 }
 
 .bg-secondary-bg {
-  background-color: #001D3D;
+  background-color: var(--surface);
 }
 
 .bg-main-accent {
-  background-color: #ffc300;
+  background-color: var(--accent);
 }
 
 
@@ -386,7 +406,7 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0, #000814 100%);
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0, var(--background) 100%);
   pointer-events: none;
   transition: linear 0.5s;
 }
@@ -405,7 +425,7 @@ div#cast_scroller.scrolled::after {
 }
 
 .text-main-accent {
-  color: #FFC300
+  color: var(--accent);
 }
 
 .truncate-text {

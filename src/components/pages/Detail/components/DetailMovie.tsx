@@ -169,7 +169,7 @@ const DetailMovie = ({ detailMovie, isLoading, castingList, movieReviews, extern
                         // className="progress-ring__circle"
                         stroke={bgcolor(detailMovie?.vote_average ? detailMovie.vote_average * 10 : 0)}
                         strokeWidth="2"
-                        fill="#001D3D"
+                        fill="var(--surface)"
                         r="24"
                         cx="28"
                         cy="28"
@@ -432,7 +432,7 @@ const DetailMovie = ({ detailMovie, isLoading, castingList, movieReviews, extern
                 {movieKeywords?.map((val: Keyword, index: number) => {
                   return (
                     <span
-                      className="mr-2 mb-2 bg-gray-700 p-1 border rounded border-[#59677d]"
+                      className="mr-2 mb-2 bg-gray-700 p-1 border rounded border-[var(--border-light)]"
                       data-aos="fade-up"
                       key={index}
                     >

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
       <body>
         <AppLayout>{children}</AppLayout>
       </body>

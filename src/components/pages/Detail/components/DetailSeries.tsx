@@ -169,7 +169,7 @@ const DetailSeries = ({ detailTv, isLoading, castingList, externalIds, id, movie
                         // className="progress-ring__circle"
                         stroke={bgcolor(detailTv?.vote_average ? detailTv.vote_average * 10 : 0)}
                         strokeWidth="2"
-                        fill="#001D3D"
+                        fill="var(--surface)"
                         r="24"
                         cx="28"
                         cy="28"
@@ -310,7 +310,7 @@ const DetailSeries = ({ detailTv, isLoading, castingList, externalIds, id, movie
           <div>
             {/* ------------------SEASON SECTION------------------ */}
             <h3 className="font-bold text-2xl mb-[16px]">Current Season</h3>
-            <div className="flex flex-wrap md:flex-nowrap box-shadow border-[1px] border-[#374151] rounded-[8px] gap-[12px]">
+            <div className="flex flex-wrap md:flex-nowrap box-shadow border-[1px] border-[var(--border)] rounded-[8px] gap-[12px]">
               <img
                 className="lazy-load-image md:max-w-[120px] rounded-l-[8px] object-cover	"
                 src={imageUrl + detailTv?.seasons?.slice(-1)[0]?.poster_path}
@@ -505,7 +505,7 @@ const DetailSeries = ({ detailTv, isLoading, castingList, externalIds, id, movie
                   {movieKeywords?.map((val: Keyword, index: number) => {
                     return (
                       <span
-                        className="mr-2 mb-2 bg-gray-700 p-1 border rounded border-[#59677d]"
+                        className="mr-2 mb-2 bg-gray-700 p-1 border rounded border-[var(--border-light)]"
                         data-aos="fade-up"
                         key={index}
                       >

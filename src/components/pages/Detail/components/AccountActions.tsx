@@ -20,8 +20,8 @@ interface AccountActionsProps {
 }
 
 const STAR_TOTAL = 10;
-const STAR_FILL = "#ffc300";
-const STAR_EMPTY = "#374151";
+const STAR_FILL = "var(--accent)";
+const STAR_EMPTY = "var(--border)";
 
 const AccountActions = ({ mediaType, mediaId }: AccountActionsProps) => {
   const { accountId, isLoggedIn } = useAuth();
@@ -107,7 +107,7 @@ const AccountActions = ({ mediaType, mediaId }: AccountActionsProps) => {
           )}
           {rate.isPending && <Loader size={16} />}
         </div>
-        {error && <span className="text-[#e84c3d] text-xs">{error}</span>}
+        {error && <span className="text-[var(--danger)] text-xs">{error}</span>}
       </div>
 
       {/* Favorite + Watchlist */}
@@ -118,8 +118,8 @@ const AccountActions = ({ mediaType, mediaId }: AccountActionsProps) => {
           disabled={favorite.isPending}
           className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-bold transition disabled:opacity-60 ${
             isFavorite
-              ? "bg-[#ffc300] text-black border-[#ffc300]"
-              : "bg-transparent text-white border-[#374151] hover:border-[#ffc300]"
+              ? "bg-[var(--accent)] text-[var(--accent-foreground)] border-[var(--accent)]"
+              : "bg-transparent text-white border-[var(--border)] hover:border-[var(--accent)]"
           }`}
         >
           <svg
@@ -144,8 +144,8 @@ const AccountActions = ({ mediaType, mediaId }: AccountActionsProps) => {
           disabled={watchlist.isPending}
           className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-bold transition disabled:opacity-60 ${
             isWatchlist
-              ? "bg-[#ffc300] text-black border-[#ffc300]"
-              : "bg-transparent text-white border-[#374151] hover:border-[#ffc300]"
+              ? "bg-[var(--accent)] text-[var(--accent-foreground)] border-[var(--accent)]"
+              : "bg-transparent text-white border-[var(--border)] hover:border-[var(--accent)]"
           }`}
         >
           <svg

@@ -1,6 +1,6 @@
 const StarReview = ({ voteAverage }: { voteAverage?: number }) => {
   return (
-    <div className="bg-[#374151] p-[4px] px-[6px] flex rounded-[8px] items-center gap-[4px] text-xs">
+    <div className="bg-[var(--border)] p-[4px] px-[6px] flex rounded-[8px] items-center gap-[4px] text-xs">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="12"

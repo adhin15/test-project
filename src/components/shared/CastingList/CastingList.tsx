@@ -6,7 +6,7 @@ const CastingList = ({ data }: { data: CastMember }) => {
   return (
     <>
       <div
-        className="mr-4 relative border rounded border-[#001d3d] box-shadow md:max-w-[150px] max-w-[120px] h-full transition-transform duration-100 transform hover:scale-105"
+        className="mr-4 relative border rounded border-[var(--surface)] box-shadow md:max-w-[150px] max-w-[120px] h-full transition-transform duration-100 transform hover:scale-105"
         style={{ overflowWrap: "break-word" }}
       >
         <Link href={`/person/${data?.id}`}>
