@@ -22,14 +22,11 @@ const getMoviesVideo = async (id:string) =>{
   }
 
 
-export async function POST(request:NextRequest) {
+export async function POST(request: NextRequest) {
   let response;
-
   const requestData = await request.json();
-  await getMoviesVideo(requestData?.id).then((val)=>{
+  await getMoviesVideo(requestData?.id).then((val) => {
     response = val;
-  })
-
-    return NextResponse.json({ results: response, status:'OK' }, { status: 200 });
- 
+  });
+  return NextResponse.json(response, { status: 200 });
 }

@@ -5,6 +5,10 @@ import useGetKeywords from "./hooks/useGetKeywords";
 import useGetExternalId from "./hooks/useGetExternalId";
 import { useEffect, useMemo, useState } from "react";
 import useGetMovieReviews from "./hooks/useGetReview";
+import useGetImages from "./hooks/useGetImages";
+import useGetRecommendations from "./hooks/useGetRecommendations";
+import useGetCollection from "./hooks/useGetCollection";
+import useGetVideo from "./hooks/useGetDetailVideo";
 
 const useDetail = () =>{
     const { id } = useParams();
@@ -40,6 +44,32 @@ const useDetail = () =>{
       type: mediaType,
     });
 
+    // P1 sections
+    const { data: mediaImages, isLoading: isImagesLoading } = useGetImages({
+      payload: { id: idValue },
+      type: mediaType,
+    });
+
+    const { data: videos, isLoading: isVideosLoading } = useGetVideo({
+      payload: { id: idValue },
+      type: mediaType,
+      enabled: !!idValue,
+    });
+
+    const { data: recommendations, isLoading: isRecommendationsLoading } = useGetRecommendations({
+      payload: { id: idValue },
+      type: mediaType,
+    });
+
+    const collectionId =
+      detailMovie &&
+      (detailMovie as { belongs_to_collection?: { id?: number } | null })
+        ?.belongs_to_collection?.id;
+
+    const { data: collection, isLoading: isCollectionLoading } = useGetCollection({
+      id: collectionId ? String(collectionId) : "",
+    });
+
     const isLoading = useMemo(() => {
       return isDetailLoading && isCastingListLoading && isKeywordsLoading && isExternalIdsLoading;
     }, [isDetailLoading, isCastingListLoading, isKeywordsLoading, isExternalIdsLoading]);
@@ -50,6 +80,10 @@ const useDetail = () =>{
         movieReviews,
         movieKeywords,
         externalIds,
+        mediaImages,
+        videos,
+        recommendations,
+        collection,
         isLoading,
         type: mediaType,
         id: idValue,

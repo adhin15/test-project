@@ -8,24 +8,60 @@ import CardSkeleton from "@/components/shared/Skeleton";
 import { formatDate, votePercentage } from "@/components/shared/Helper/Helper";
 import StarReview from "@/components/shared/StarRreview";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
+import MediaGallery from "@/components/shared/MediaGallery/MediaGallery";
+import Recommendations from "./Recommendations";
+import Reviews from "./Reviews";
+import CollectionBanner from "./CollectionBanner";
+import PlayTrailerButton from "./PlayTrailerButton";
+import useVideoPlayer from "../hooks/useVideoPlayer";
 import AccountActions from "./AccountActions";
 import type {
   CastMember,
+  CollectionDetail,
   DetailViewProps,
   Genre,
   Keyword,
+  MediaImages,
+  Review,
   SeriesDetail,
   SeriesSeason,
+  TrendingItem,
+  Video,
 } from "@/types";
 
 interface DetailSeriesProps extends DetailViewProps {
   detailTv?: SeriesDetail;
+  movieReviews?: { results: Review[] };
+  mediaImages?: MediaImages;
+  videos?: { results: Video[] };
+  recommendations?: { results: TrendingItem[] };
+  collection?: CollectionDetail;
+  type: "movie" | "tv";
 }
 
-const DetailSeries = ({ detailTv, isLoading, castingList, externalIds, id, movieKeywords }: DetailSeriesProps) => {
+const DetailSeries = ({
+  detailTv,
+  isLoading,
+  castingList,
+  externalIds,
+  id,
+  movieKeywords,
+  movieReviews,
+  mediaImages,
+  videos,
+  recommendations,
+  collection,
+  type,
+}: DetailSeriesProps) => {
+  const { open, player } = useVideoPlayer();
   const imageUrl = `https://image.tmdb.org/t/p/original`;
   const color = ["#2ce574", "#cdf03a", "#ffe500", "#ff9600", "#ff3924"];
   const [castingScrolled, setCastingScrolled] = useState(false);
+
+  const trailerKey =
+    videos?.results?.find(
+      (v) => v.type === "Trailer" && v.site === "YouTube"
+    )?.key;
 
   const circle = () => {
     const el = document.getElementById(`circle ${detailTv?.id}`);
@@ -242,6 +278,13 @@ const DetailSeries = ({ detailTv, isLoading, castingList, externalIds, id, movie
                     </svg>
                   </IconContainer>
                 </span>
+              </div>
+
+              <div className="my-2 flex flex-wrap items-center my-2 justify-center md:justify-start gap-3">
+                <PlayTrailerButton
+                  hasTrailer={!!trailerKey}
+                  onPlay={() => trailerKey && open(trailerKey)}
+                />
               </div>
 
               <div className="my-2" data-aos="fade-left" data-aos-delay="600" data-aos-once="true">
@@ -519,6 +562,27 @@ const DetailSeries = ({ detailTv, isLoading, castingList, externalIds, id, movie
           </div>
         </div>
       </div>
+
+      {/* ---------- P1 NEW SECTIONS ---------- */}
+      <CollectionBanner collection={collection} isLoading={isLoading} />
+
+      <MediaGallery
+        images={mediaImages}
+        videos={videos?.results}
+        isLoading={isLoading}
+        onPlayVideo={open}
+      />
+
+      <Reviews reviews={movieReviews} isLoading={isLoading} />
+
+      <Recommendations
+        items={recommendations?.results}
+        type={type}
+        currentTitle={detailTv?.name}
+        isLoading={isLoading}
+      />
+
+      {player}
     </>
   );
 };

@@ -2,7 +2,9 @@ import type {
   Credits,
   ExternalIds,
   Keyword,
+  MediaImages,
   Paginated,
+  Review,
   SeriesDetail,
   SeriesSummary,
   Video,
@@ -157,6 +159,67 @@ export const getTvExternalIds = async (payload: {
   id: string;
 }): Promise<ExternalIds | undefined> => {
   const fullUrl = `${url}/tv/external_ids`;
+  try {
+    const response = await fetch(fullUrl, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const responseData = await response.json();
+    return Promise.resolve(responseData);
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
+};
+
+export const getTvImages = async (payload: {
+  id: string;
+}): Promise<MediaImages | undefined> => {
+  const fullUrl = `${url}/tv/images`;
+  try {
+    const response = await fetch(fullUrl, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const responseData = await response.json();
+    return Promise.resolve(responseData);
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
+};
+
+export const getTvRecommendations = async (payload: {
+  id: string;
+}): Promise<Paginated<SeriesSummary> | undefined> => {
+  const fullUrl = `${url}/tv/recommendations`;
+  try {
+    const response = await fetch(fullUrl, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const responseData = await response.json();
+    return Promise.resolve(responseData);
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
+};
+
+export const getTvReviews = async (payload: {
+  id: string;
+  page: string;
+}): Promise<Paginated<Review> | undefined> => {
+  const fullUrl = `${url}/tv/reviews`;
   try {
     const response = await fetch(fullUrl, {
       method: "POST",

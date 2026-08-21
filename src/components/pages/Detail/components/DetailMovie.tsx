@@ -5,25 +5,59 @@ import IconContainer from "@/components/shared/IconContainer/IconContainer";
 import ImageContainer from "@/components/shared/ImageContainer/ImageContainer";
 import CardSkeleton from "@/components/shared/Skeleton";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
+import MediaGallery from "@/components/shared/MediaGallery/MediaGallery";
+import Recommendations from "./Recommendations";
+import Reviews from "./Reviews";
+import CollectionBanner from "./CollectionBanner";
+import PlayTrailerButton from "./PlayTrailerButton";
+import useVideoPlayer from "../hooks/useVideoPlayer";
 import AccountActions from "./AccountActions";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type {
   CastMember,
+  CollectionDetail,
   DetailViewProps,
   Genre,
   Keyword,
+  MediaImages,
   MovieDetail,
   Review,
+  TrendingItem,
+  Video,
 } from "@/types";
 
 interface DetailMovieProps extends DetailViewProps {
   detailMovie?: MovieDetail;
   movieReviews?: { results: Review[] };
+  mediaImages?: MediaImages;
+  videos?: { results: Video[] };
+  recommendations?: { results: TrendingItem[] };
+  collection?: CollectionDetail;
+  type: "movie" | "tv";
 }
 
-const DetailMovie = ({ detailMovie, isLoading, castingList, movieReviews, externalIds, id, movieKeywords }: DetailMovieProps) => {
+const DetailMovie = ({
+  detailMovie,
+  isLoading,
+  castingList,
+  movieReviews,
+  mediaImages,
+  videos,
+  recommendations,
+  collection,
+  externalIds,
+  id,
+  movieKeywords,
+  type,
+}: DetailMovieProps) => {
+  const { open, player } = useVideoPlayer();
   const [castingScrolled, setCastingScrolled] = useState(false);
+
+  const trailerKey =
+    videos?.results?.find(
+      (v) => v.type === "Trailer" && v.site === "YouTube"
+    )?.key;
 
   const color = ["#2ce574", "#cdf03a", "#ffe500", "#ff9600", "#ff3924"];
   const imageUrl = `https://image.tmdb.org/t/p/original`;
@@ -244,6 +278,13 @@ const DetailMovie = ({ detailMovie, isLoading, castingList, movieReviews, extern
                 </span>
               </div>
 
+              <div className="my-2 flex flex-wrap items-center my-2 justify-center md:justify-start gap-3">
+                <PlayTrailerButton
+                  hasTrailer={!!trailerKey}
+                  onPlay={() => trailerKey && open(trailerKey)}
+                />
+              </div>
+
               <div className="my-2" data-aos="fade-left" data-aos-delay="600" data-aos-once="true">
                 <p className="italic opacity-80">{detailMovie?.tagline}</p>
               </div>
@@ -445,6 +486,27 @@ const DetailMovie = ({ detailMovie, isLoading, castingList, movieReviews, extern
           </div>
         </div>
       </div>
+
+      {/* ---------- P1 NEW SECTIONS ---------- */}
+      <CollectionBanner collection={collection} isLoading={isLoading} />
+
+      <MediaGallery
+        images={mediaImages}
+        videos={videos?.results}
+        isLoading={isLoading}
+        onPlayVideo={open}
+      />
+
+      <Reviews reviews={movieReviews} isLoading={isLoading} />
+
+      <Recommendations
+        items={recommendations?.results}
+        type={type}
+        currentTitle={detailMovie?.title}
+        isLoading={isLoading}
+      />
+
+      {player}
     </>
   );
 };

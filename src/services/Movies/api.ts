@@ -2,6 +2,7 @@ import type {
   Credits,
   ExternalIds,
   Keyword,
+  MediaImages,
   MovieDetail,
   MovieSummary,
   Paginated,
@@ -185,6 +186,46 @@ export const getMovieReviews = async (payload: {
     const responseData = await response.json();
     return Promise.resolve(responseData);
   } catch {
+    return undefined;
+  }
+};
+
+export const getMovieImages = async (payload: {
+  id: string;
+}): Promise<MediaImages | undefined> => {
+  const fullUrl = `${url}/movie/images`;
+  try {
+    const response = await fetch(fullUrl, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const responseData = await response.json();
+    return Promise.resolve(responseData);
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
+};
+
+export const getMovieRecommendations = async (payload: {
+  id: string;
+}): Promise<Paginated<MovieSummary> | undefined> => {
+  const fullUrl = `${url}/movie/recommendations`;
+  try {
+    const response = await fetch(fullUrl, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const responseData = await response.json();
+    return Promise.resolve(responseData);
+  } catch (err) {
+    console.log(err);
     return undefined;
   }
 };

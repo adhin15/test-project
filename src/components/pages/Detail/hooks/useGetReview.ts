@@ -1,30 +1,26 @@
-
-
-import { getDetailMovie, getMovieReviews } from "@/services/Movies/api";
-import { getDetailTv } from "@/services/Series/api";
+import { getMovieReviews } from "@/services/Movies/api";
+import { getTvReviews } from "@/services/Series/api";
 import { useQuery } from "@tanstack/react-query";
-import type { QueryOptions } from "@/types";
+import type { Paginated, QueryOptions, Review } from "@/types";
 
 const useGetMovieReviews = ({
   payload,
-  onSuccess = () =>{},
-  type = "movie"
-}:QueryOptions<{ id: string; page: string }>) => {
+  type = "movie",
+}: QueryOptions<{ id: string; page: string }>) => {
   const query = useQuery({
-    queryFn: async () => {
-      if(type === 'movie'){
-        const res = await getMovieReviews({id:payload?.id ?? "", page: payload?.page ?? ""});
-          return res;
-      }else{
-        const res = await getMovieReviews({id:payload?.id ?? "", page: payload?.page ?? ""});
-          return res;
-
+    queryFn: async (): Promise<Paginated<Review> | undefined> => {
+      if (type === "movie") {
+        return getMovieReviews({
+          id: payload?.id ?? "",
+          page: payload?.page ?? "",
+        });
       }
-      },
-      queryKey: ['detail-movie-tv',{id:payload?.id ?? "", page: payload?.page ?? ""}],
-    },);
-  
-    return query;
-  };
+      return getTvReviews({ id: payload?.id ?? "", page: payload?.page ?? "" });
+    },
+    queryKey: ["detail-movie-tv", { id: payload?.id ?? "", page: payload?.page ?? "" }],
+  });
 
-  export default useGetMovieReviews;
+  return query;
+};
+
+export default useGetMovieReviews;

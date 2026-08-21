@@ -53,6 +53,8 @@ export interface MovieDetail extends MovieSummary {
   tagline: string;
   homepage: string | null;
   backdrop_path: string | null;
+  /** Present only when the movie belongs to a collection (e.g. "Star Wars Collection"). */
+  belongs_to_collection?: CollectionSummary | null;
 }
 
 export interface SeriesDetail extends SeriesSummary {
@@ -67,6 +69,8 @@ export interface SeriesDetail extends SeriesSummary {
   type: string;
   next_episode_to_air: EpisodeAir | null;
   last_episode_to_air: EpisodeAir | null;
+  /** Some titles (e.g. spin-offs) carry a collection; mostly null for TV. */
+  belongs_to_collection?: CollectionSummary | null;
 }
 
 export interface SeriesSeason {
@@ -130,7 +134,46 @@ export interface Video {
   type: string;
 }
 
+/** A single still image (backdrop / poster / logo) from the TMDB /images endpoint. */
+export interface ImageItem {
+  aspect_ratio: number;
+  height: number;
+  width: number;
+  iso_639_1: string | null;
+  iso_3166_1: string | null;
+  file_path: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+/** Response of `/movie/{id}/images` and `/tv/{id}/images`. */
+export interface MediaImages {
+  id: number;
+  backdrops: ImageItem[];
+  posters: ImageItem[];
+  logos: ImageItem[];
+}
+
+/** `belongs_to_collection` block embedded in a movie detail. */
+export interface CollectionSummary {
+  id: number;
+  name: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+}
+
+/** Response of `/collection/{id}`. */
+export interface CollectionDetail {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  parts: (MovieSummary | SeriesSummary)[];
+}
+
 export interface Review {
+  id: string;
   author: string;
   author_details: {
     avatar_path: string | null;
