@@ -132,6 +132,8 @@ export interface Video {
   name: string;
   site: string;
   type: string;
+  /** TMDB /videos items carry vote data; used to rank "Terpopuler" media across categories. */
+  vote_count?: number;
 }
 
 /** A single still image (backdrop / poster / logo) from the TMDB /images endpoint. */

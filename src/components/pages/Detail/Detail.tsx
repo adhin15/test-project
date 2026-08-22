@@ -18,6 +18,8 @@ const Detail = () => {
     isLoading,
     id,
     type,
+    reviewPage,
+    setReviewPage,
   } = useDetail();
 
   return (
@@ -37,6 +39,8 @@ const Detail = () => {
             recommendations={recommendations}
             collection={collection}
             type={type}
+            reviewPage={reviewPage}
+            setReviewPage={setReviewPage}
           />
         ) : (
           <DetailSeries

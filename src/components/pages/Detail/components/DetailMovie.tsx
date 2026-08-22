@@ -2,11 +2,11 @@ import CastingList from "@/components/shared/CastingList/CastingList";
 import DetailSkeleton from "@/components/shared/DetailSkeleton/DetailSkeleton";
 import { UsdFormatter, votePercentage } from "@/components/shared/Helper/Helper";
 import IconContainer from "@/components/shared/IconContainer/IconContainer";
-import ImageContainer from "@/components/shared/ImageContainer/ImageContainer";
 import CardSkeleton from "@/components/shared/Skeleton";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
 import MediaGallery from "@/components/shared/MediaGallery/MediaGallery";
 import Recommendations from "./Recommendations";
+import CategoryChips from "./CategoryChips";
 import Reviews from "./Reviews";
 import CollectionBanner from "./CollectionBanner";
 import PlayTrailerButton from "./PlayTrailerButton";
@@ -22,6 +22,7 @@ import type {
   Keyword,
   MediaImages,
   MovieDetail,
+  Paginated,
   Review,
   TrendingItem,
   Video,
@@ -29,12 +30,14 @@ import type {
 
 interface DetailMovieProps extends DetailViewProps {
   detailMovie?: MovieDetail;
-  movieReviews?: { results: Review[] };
+  movieReviews?: Paginated<Review>;
   mediaImages?: MediaImages;
   videos?: { results: Video[] };
   recommendations?: { results: TrendingItem[] };
   collection?: CollectionDetail;
   type: "movie" | "tv";
+  reviewPage?: string;
+  setReviewPage?: (page: string) => void;
 }
 
 const DetailMovie = ({
@@ -50,6 +53,8 @@ const DetailMovie = ({
   id,
   movieKeywords,
   type,
+  reviewPage,
+  setReviewPage,
 }: DetailMovieProps) => {
   const { open, player } = useVideoPlayer();
   const [castingScrolled, setCastingScrolled] = useState(false);
@@ -110,7 +115,7 @@ const DetailMovie = ({
   return (
     <>
       <div
-        className="bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[31rem] md:max-h-[35rem] opacity-30 min-h-[40%] transition-image"
+        className="bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[31rem] md:max-h-[35rem] opacity-30 min-h-[40%] transition-image pointer-events-none"
         style={{
           backgroundImage: `URL(https://image.tmdb.org/t/p/original${detailMovie?.backdrop_path})`,
         }}
@@ -347,20 +352,6 @@ const DetailMovie = ({
               </div>
             )}
           </div>
-          <div className="flex flex-col border-1 rounded-md border border-gray-700 p-4 box-shadow mt-4">
-            {movieReviews?.results?.map((val: Review, index: number) => {
-              return (
-                <div className="flex flex-col" key={index}>
-                  <div className="flex">
-                    <div className="rounded-full">
-                      <ImageContainer src={imageUrl + val?.author_details?.avatar_path} />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            <div>tes</div>
-          </div>
         </div>
         <div className="md:w-1/3 w-full md:px-3 mt-7 md:mt-0">
           <div className="h-full">
@@ -497,12 +488,23 @@ const DetailMovie = ({
         onPlayVideo={open}
       />
 
-      <Reviews reviews={movieReviews} isLoading={isLoading} />
+      <Reviews
+        reviews={movieReviews}
+        isLoading={isLoading}
+        page={reviewPage}
+        setPage={setReviewPage}
+      />
 
       <Recommendations
         items={recommendations?.results}
         type={type}
         currentTitle={detailMovie?.title}
+        isLoading={isLoading}
+      />
+
+      <CategoryChips
+        genres={detailMovie?.genres}
+        keywords={movieKeywords}
         isLoading={isLoading}
       />
 

@@ -43,7 +43,6 @@ const useDetail = () =>{
       payload: { id: idValue, page: page?.toString() },
       type: mediaType,
     });
-
     // P1 sections
     const { data: mediaImages, isLoading: isImagesLoading } = useGetImages({
       payload: { id: idValue },
@@ -87,6 +86,8 @@ const useDetail = () =>{
         isLoading,
         type: mediaType,
         id: idValue,
+        reviewPage: page,
+        setReviewPage: setPage,
     }
 }
 

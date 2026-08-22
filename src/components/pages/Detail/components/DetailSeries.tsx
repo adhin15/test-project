@@ -10,6 +10,7 @@ import StarReview from "@/components/shared/StarRreview";
 import GeneralFieldSkeleton from "@/components/shared/Skeleton/GeneralFieldSkeleton";
 import MediaGallery from "@/components/shared/MediaGallery/MediaGallery";
 import Recommendations from "./Recommendations";
+import CategoryChips from "./CategoryChips";
 import Reviews from "./Reviews";
 import CollectionBanner from "./CollectionBanner";
 import PlayTrailerButton from "./PlayTrailerButton";
@@ -22,6 +23,7 @@ import type {
   Genre,
   Keyword,
   MediaImages,
+  Paginated,
   Review,
   SeriesDetail,
   SeriesSeason,
@@ -31,12 +33,14 @@ import type {
 
 interface DetailSeriesProps extends DetailViewProps {
   detailTv?: SeriesDetail;
-  movieReviews?: { results: Review[] };
+  movieReviews?: Paginated<Review>;
   mediaImages?: MediaImages;
   videos?: { results: Video[] };
   recommendations?: { results: TrendingItem[] };
   collection?: CollectionDetail;
   type: "movie" | "tv";
+  reviewPage?: string;
+  setReviewPage?: (page: string) => void;
 }
 
 const DetailSeries = ({
@@ -52,6 +56,8 @@ const DetailSeries = ({
   recommendations,
   collection,
   type,
+  reviewPage,
+  setReviewPage,
 }: DetailSeriesProps) => {
   const { open, player } = useVideoPlayer();
   const imageUrl = `https://image.tmdb.org/t/p/original`;
@@ -113,7 +119,7 @@ const DetailSeries = ({
   return (
     <>
       <div
-        className="z-[-1] bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[31rem] md:max-h-[35rem] z-10 opacity-30 min-h-[40%] transition-image"
+        className="z-[-1] bg-center bg-cover bg-no-repeat w-full inset-0 absolute top-0 max-h-[31rem] md:max-h-[35rem] z-10 opacity-30 min-h-[40%] transition-image pointer-events-none"
         style={{
           backgroundImage: `URL(https://image.tmdb.org/t/p/original${detailTv?.backdrop_path})`,
         }}
@@ -573,12 +579,23 @@ const DetailSeries = ({
         onPlayVideo={open}
       />
 
-      <Reviews reviews={movieReviews} isLoading={isLoading} />
+      <Reviews
+        reviews={movieReviews}
+        isLoading={isLoading}
+        page={reviewPage}
+        setPage={setReviewPage}
+      />
 
       <Recommendations
         items={recommendations?.results}
         type={type}
         currentTitle={detailTv?.name}
+        isLoading={isLoading}
+      />
+
+      <CategoryChips
+        genres={detailTv?.genres}
+        keywords={movieKeywords}
         isLoading={isLoading}
       />
 

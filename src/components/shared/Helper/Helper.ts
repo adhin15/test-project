@@ -35,7 +35,9 @@ export const formatDate = (val: string | Date | null | undefined) => {
 
   export  const generateImageUrl = (url: string | null | undefined) => {
     const imageUrl = `https://image.tmdb.org/t/p/original/`;
-    if (!url) return "/user.png";
+    // TMDB often returns the literal string "null" (truthy) for missing images.
+    // Treat it like any other falsy/missing value so broken paths fall back to the placeholder.
+    if (!url || url === "null" || url.trim() === "") return "/user.png";
 
     let fullUrl = imageUrl + url;
     fullUrl = fullUrl.replaceAll(" ", "%20");

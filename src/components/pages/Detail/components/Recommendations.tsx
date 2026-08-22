@@ -1,11 +1,15 @@
 "use client";
 
 import Card from "@/components/shared/Card/Card";
+import CardSkeleton from "@/components/shared/Skeleton";
 import type { TrendingItem } from "@/types";
 
 /**
  * Recommendations (P1 — section C) "If you liked...".
  * Uses `/movie/{id}/recommendations` & `/tv/{id}/recommendations` (NOT `/similar`).
+ *
+ * Layout mirrors the Trending section on the homepage (same card scroller and
+ * Card component, so poster width/height are identical to Trending).
  */
 interface RecommendationsProps {
   items?: TrendingItem[];
@@ -20,21 +24,6 @@ const Recommendations = ({
   isLoading,
   currentTitle,
 }: RecommendationsProps) => {
-  if (isLoading) {
-    return (
-      <section className="mt-8 animate-pulse">
-        <div className="h-6 w-72 rounded bg-[var(--surface-2)] mb-4" />
-        <div className="flex overflow-x-auto gap-3">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="min-w-[150px] aspect-[2/3] rounded bg-[var(--surface-2)]" />
-          ))}
-        </div>
-      </section>
-    );
-  }
-
-  if (!items || items.length === 0) return null;
-
   const linkType = type === "movie" ? "movie" : "tv-series";
 
   return (
@@ -47,11 +36,31 @@ const Recommendations = ({
         <span className="font-semibold text-[var(--accent)]">{currentTitle}</span>
         , kamu mungkin juga suka:
       </p>
-      <div className="flex overflow-x-auto gap-3 pb-2">
-        {items.slice(0, 10).map((item, index) => (
-          <Card key={`${item.id}-${index}`} data={item} type={linkType} />
-        ))}
-      </div>
+
+      {!isLoading ? (
+        <>
+          <div className="flex overflow-x-scroll w-full flex-nowrap px-4 py-4 fade-in">
+            {items?.map((item, index) => {
+              return (
+                <div data-aos="fade-left" data-aos-delay={`${index}00`} key={index}>
+                  <Card data={item} type={linkType} />
+                </div>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <div className="flex overflow-x-scroll w-full flex-nowrap px-4 py-4">
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
+      )}
     </section>
   );
 };
